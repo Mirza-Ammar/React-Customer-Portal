@@ -130,7 +130,7 @@ export default function LoginView() {
                     {vm.step === "phone" && (
                         <>
                             <label className="form-label">
-                                {t("login.phoneLabel")}
+                                {t("login.enterPhone")}
                             </label>
 
                             <div className="phone-row">
