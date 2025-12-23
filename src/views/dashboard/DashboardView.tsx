@@ -15,7 +15,7 @@ export default function DashboardView() {
             </h1>
 
             <p style={{ marginTop: 12, color: "#6b7280" }}>
-                You have successfully logged in 🎉
+                Dashboard UI not finalized yet, so didn't made it.
             </p>
         </div>
     );

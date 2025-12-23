@@ -20,7 +20,32 @@
         "resend": "Resend code",
         "resendIn": "Resend in {{seconds}}s",
         "orderRate": "Do you want to check your order rate?",
-        "checkNow": "Check Now"
+        "checkNow": "Check Now",
+        "phonePlaceholder": "7XXXXXXXXX",
+        "branchPlaceholder": "Select branch",
+        "continue": "Continue",
+        "companyLogoAlt": "Company logo",
+        "heroAlt": "Login illustration",
+        "heroTitleLine1": "Revolutionize Delivery with",
+        "heroTitleLine2": "Smarter Logistics",
+        "heroDescription": "Track shipments in real-time, manage your deliveries efficiently, and optimize your logistics workflow.",
+        "features": {
+            "fast": {
+                "title": "Fast Delivery",
+                "l1": "Express shipping",
+                "l2": "worldwide"
+            },
+            "secure": {
+                "title": "Secure",
+                "l1": "Protected &",
+                "l2": "insured"
+            },
+            "track": {
+                "title": "24/7 Track",
+                "l1": "Real-time",
+                "l2": "updates"
+            }
+        }
     },
     "header": {
         "individual": "Individual",
@@ -96,7 +121,24 @@
         "paymentType": "Payment Type",
         "paymentStatus": "Status",
         "requestIqamaOrder": "Request Iqama Order",
-        "search": "Search"
+        "search": "Search",
+        "drawer": {
+            "title": "Request order for Iqama card",
+            "customerDetails": "Customer details",
+            "fields": {
+                "fullName": "Full name",
+                "contactNumber": "Contact number",
+                "email": "Email ID",
+                "address": "Address"
+            },
+            "deliverToLawyer": "Deliver the card to your lawyer",
+            "deliverHint": "If selected, the order will be shipped to the lawyer’s primary address.",
+            "moreInfo": "More information",
+            "optional": "Optional",
+            "writeHere": "Write here...",
+            "cancel": "Cancel",
+            "createOrder": "Create Order"
+        }
     },
     "poBox": {
         "dateApplied": "Date applied",

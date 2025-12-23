@@ -20,7 +20,32 @@
         "resend": "إعادة الإرسال",
         "resendIn": "إعادة الإرسال خلال {{seconds}} ثانية",
         "orderRate": "هل تريد التحقق من سعر الطلب؟",
-        "checkNow": "تحقق الآن"
+        "checkNow": "تحقق الآن",
+        "phonePlaceholder": "7XXXXXXXXX",
+        "branchPlaceholder": "اختر الفرع",
+        "continue": "متابعة",
+        "companyLogoAlt": "شعار الشركة",
+        "heroAlt": "صورة تسجيل الدخول",
+        "heroTitleLine1": "ثورة في عالم التوصيل مع",
+        "heroTitleLine2": "لوجستيات أذكى",
+        "heroDescription": "تتبع الشحنات لحظة بلحظة، وأدر عمليات التوصيل بكفاءة، وحسّن سير العمل اللوجستي.",
+        "features": {
+            "fast": {
+                "title": "توصيل سريع",
+                "l1": "شحن سريع",
+                "l2": "حول العالم"
+            },
+            "secure": {
+                "title": "آمن",
+                "l1": "محمي و",
+                "l2": "مؤمن"
+            },
+            "track": {
+                "title": "تتبع 24/7",
+                "l1": "تحديثات",
+                "l2": "فورية"
+            }
+        }
     },
     "header": {
         "individual": "فردي",
@@ -96,7 +121,24 @@
         "paymentType": "نوع الدفع",
         "paymentStatus": "حالة الدفع",
         "requestIqamaOrder": "طلب أمر إقامةr",
-        "search": "ابحث هنا... "
+        "search": "ابحث هنا... ",
+        "drawer": {
+            "title": "طلب إصدار بطاقة إقامة",
+            "customerDetails": "بيانات العميل",
+            "fields": {
+                "fullName": "الاسم الكامل",
+                "contactNumber": "رقم الاتصال",
+                "email": "البريد الإلكتروني",
+                "address": "العنوان"
+            },
+            "deliverToLawyer": "تسليم البطاقة إلى محاميك",
+            "deliverHint": "في حال التحديد، سيتم شحن الطلب إلى العنوان الرئيسي للمحامي.",
+            "moreInfo": "معلومات إضافية",
+            "optional": "اختياري",
+            "writeHere": "اكتب هنا",
+            "cancel": "إلغاء",
+            "createOrder": "إنشاء الطلب"
+        }
     },
     "poBox": {
         "dateApplied": "تاريخ التقديم",

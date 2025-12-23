@@ -181,3 +181,33 @@ html[lang="ar"] body,
 html[lang="ku"] body {
   font-family: "Noto Kufi Arabic", system-ui, sans-serif;
 }
+
+/* ================================
+   HEADER SEARCH ANIMATION
+================================ */
+
+@keyframes fadeSlide {
+  0% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  20% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  80% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+.animate-fade-slide {
+  animation: fadeSlide 3s ease-in-out;
+}

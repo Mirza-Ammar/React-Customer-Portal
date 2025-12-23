@@ -105,7 +105,7 @@ function SubMenuItem({
                 flex items-center gap-3
                 h-[36px] px-4 py-2 rounded-[6px]
                 text-[13px] transition-colors w-full
-                mr-6
+                me-6
                 `,
                 isSelected
                     ? "bg-[var(--color-secondary)] text-[var(--color-dark-1)] font-bold"

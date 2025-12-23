@@ -1,18 +1,10 @@
-// Login step enum (Flutter: enum LoginStep)
-export type LoginStep = "phone" | "branch" | "otp";
+export type LoginStep = "phone" | "otp" | "branch";
 
-/**
- * LoginViewModel
- * ----------------
- * Flutter equivalent:
- * ChangeNotifier / Stacked ViewModel
- */
 export class LoginViewModel {
-    // ===== State =====
     step: LoginStep = "phone";
     isBusy = false;
 
-    phone = "7507836447";
+    phone = "";
     countryCodes = ["+964", "+1", "+44", "+971", "+92"];
     selectedCountry = "+964";
 
@@ -23,9 +15,8 @@ export class LoginViewModel {
     resendRemaining = 0;
 
     error = "";
-    otpError = ""; // 🔥 NEW
+    otpError = "";
 
-    // ===== Validation =====
     validatePhone() {
         if (!this.phone || this.phone.length < 8) {
             this.error = "Enter a valid phone number";
@@ -35,51 +26,30 @@ export class LoginViewModel {
         return true;
     }
 
-    // ===== Computed =====
     get canGoNextFromPhone() {
         return this.phone.length >= 10 && !this.isBusy;
-    }
-
-    get canSendOtp() {
-        return this.phone.length >= 10 && !!this.selectedBranch && !this.isBusy;
     }
 
     get isOtpComplete() {
         return this.otp.join("").length === 6;
     }
 
-    // ===== Actions =====
     goToBranchStep() {
         if (!this.validatePhone()) return;
-        this.step = "branch";
-    }
-
-    async sendOtp() {
-        if (!this.canSendOtp) return;
-
-        this.isBusy = true;
-        await new Promise((r) => setTimeout(r, 3000));
-        this.isBusy = false;
-
         this.step = "otp";
         this.startResendTimer();
     }
 
-    /**
-     * 🔐 OTP VALIDATION
-     * Valid OTP: 111111
-     */
     async verifyOtp(): Promise<boolean> {
-        if (!this.isOtpComplete) return false;
-
         this.isBusy = true;
         await new Promise((r) => setTimeout(r, 800));
-        this.isBusy = false;
 
         const enteredOtp = this.otp.join("");
+        this.isBusy = false;
 
         if (enteredOtp === "111111") {
             this.otpError = "";
+            this.step = "branch";
             return true;
         } else {
             this.otpError = "Invalid OTP. Please try again.";
@@ -102,4 +72,3 @@ export class LoginViewModel {
         this.resendRemaining = 0;
     }
 }
-

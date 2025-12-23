@@ -15,10 +15,7 @@ function highlightMatch(text: string, query: string) {
 
     return parts.map((part, i) =>
         part.toLowerCase() === query.toLowerCase() ? (
-            <span
-                key={i}
-                className="text-[var(--color-primary)] font-semibold"
-            >
+            <span key={i} className="text-[var(--color-primary)] font-semibold">
                 {part}
             </span>
         ) : (
@@ -39,12 +36,12 @@ export default function Header() {
     const [searchOpen, setSearchOpen] = useState(false);
     const [activeIndex, setActiveIndex] = useState(-1);
 
+    /* ================= LANGUAGE ================= */
     const [selectedLang, setSelectedLang] = useState(() => {
         const saved = localStorage.getItem("lang");
         return LANGUAGES.find(l => l.i18n === saved) || LANGUAGES[0];
     });
 
-    /* ================= APPLY LANGUAGE ================= */
     useEffect(() => {
         i18n.changeLanguage(selectedLang.i18n);
         document.documentElement.dir = selectedLang.rtl ? "rtl" : "ltr";
@@ -55,14 +52,13 @@ export default function Header() {
     const isRTL = selectedLang.rtl;
     const logoSrc = isRTL ? logoKurdishSvg : logoYellowSvg;
 
-    /* ================= CMD + K / CTRL + K ================= */
+    /* ================= CMD / CTRL + K ================= */
     useEffect(() => {
         function handleShortcut(e: KeyboardEvent) {
             if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
                 e.preventDefault();
                 setSearchOpen(true);
                 setActiveIndex(-1);
-
                 setTimeout(() => {
                     const input = searchRef.current?.querySelector("input");
                     input?.focus();
@@ -74,7 +70,7 @@ export default function Header() {
         return () => window.removeEventListener("keydown", handleShortcut);
     }, []);
 
-    /* ================= CLOSE ON OUTSIDE CLICK ================= */
+    /* ================= OUTSIDE CLICK ================= */
     useEffect(() => {
         function handleClickOutside(e: MouseEvent) {
             if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
@@ -96,7 +92,7 @@ export default function Header() {
         t(item.labelKey).toLowerCase().includes(query.toLowerCase())
     );
 
-    /* ================= KEYBOARD NAVIGATION ================= */
+    /* ================= KEYBOARD NAV ================= */
     function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
         if (!searchOpen || results.length === 0) return;
 
@@ -105,12 +101,10 @@ export default function Header() {
                 e.preventDefault();
                 setActiveIndex(prev => (prev < results.length - 1 ? prev + 1 : 0));
                 break;
-
             case "ArrowUp":
                 e.preventDefault();
                 setActiveIndex(prev => (prev > 0 ? prev - 1 : results.length - 1));
                 break;
-
             case "Enter":
                 if (activeIndex >= 0) {
                     navigate(results[activeIndex].route);
@@ -119,7 +113,6 @@ export default function Header() {
                     setActiveIndex(-1);
                 }
                 break;
-
             case "Escape":
                 setSearchOpen(false);
                 setActiveIndex(-1);
@@ -127,24 +120,34 @@ export default function Header() {
         }
     }
 
+    /* ================= ANIMATED PLACEHOLDER ================= */
+    const placeholderTexts = [
+        t("header.search"),
+        navigator.platform.includes("Mac") ? "⌘ K for search" : "Ctrl + K for search",
+    ];
+
+    const [placeholderIndex, setPlaceholderIndex] = useState(0);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setPlaceholderIndex(prev => (prev + 1) % placeholderTexts.length);
+        }, 3000);
+
+        return () => clearInterval(interval);
+    }, []);
+
     return (
         <header className="px-4 pt-4 relative z-[100]">
-            <div
-                className="
-                    h-[50px]
-                    rounded-full
-                    bg-white
-                    border border-black/10
-                    flex items-center
-                    pl-2 pr-4
-                    rtl:pl-4 rtl:pr-2
-                    relative
-                "
-            >
+            <div className="h-[50px] rounded-full bg-white border border-black/10 flex items-center pl-2 pr-4 rtl:pl-4 rtl:pr-2 relative">
+
                 {/* LEFT */}
                 <div className="flex items-center gap-3">
-                    <img src={logoSrc} alt="logo" className="h-8" />
+                    <button onClick={() => navigate("/app")} aria-label="Go to dashboard">
+                        <img src={logoSrc} alt="logo" className="h-8" />
+                    </button>
+
                     <div className="h-5 w-px bg-[var(--color-dark-5)]" />
+
                     <span className="text-sm font-medium text-[var(--color-dark-1)]">
                         {t("header.individual")}
                     </span>
@@ -161,10 +164,10 @@ export default function Header() {
                         </span>
                     </div>
 
-                    {/* LANGUAGE DROPDOWN */}
+                    {/* LANGUAGE */}
                     <div className="relative" ref={dropdownRef}>
                         <button
-                            onClick={() => setLangOpen(prev => !prev)}
+                            onClick={() => setLangOpen(v => !v)}
                             className="flex items-center gap-1 text-sm px-2 py-1 rounded-md hover:bg-[var(--color-white-4)]"
                         >
                             <Globe size={16} />
@@ -173,7 +176,7 @@ export default function Header() {
                         </button>
 
                         {langOpen && (
-                            <div className="absolute right-0 mt-2 w-36 bg-white border border-black/10 rounded-lg shadow-md z-50">
+                            <div className="absolute right-0 mt-2 w-36 bg-white border border-black/10 rounded-lg shadow-md">
                                 {LANGUAGES.map(lang => (
                                     <button
                                         key={lang.i18n}
@@ -197,17 +200,35 @@ export default function Header() {
                             <div className="font-semibold">Mohammad Iqma</div>
                             <div className="text-[10px]">+9647654321234</div>
                         </div>
-                        <ChevronDown size={14} className="ml-1 opacity-70" />
+                        <ChevronDown size={14} className="opacity-70" />
                     </button>
                 </div>
 
-                {/* ================= GLOBAL SEARCH ================= */}
+                {/* ================= SEARCH ================= */}
                 <div
                     ref={searchRef}
-                    className="absolute left-1/2 -translate-x-1/2 top-[8px] w-[530px] z-[200]"
+                    className="absolute left-1/2 -translate-x-1/2 top-[8px] w-[530px]"
                 >
-                    <div className="h-[35px] rounded-full bg-[var(--color-white-6)] border border-black/15 flex items-center px-4">
+                    <div className="h-[35px] rounded-full bg-[var(--color-white-6)] border border-black/15 flex items-center px-4 relative overflow-hidden">
                         <Search size={16} />
+
+                        {/* Animated placeholder */}
+                        {!query && (
+                            <span
+                                key={placeholderIndex}
+                                className={`
+                                    absolute
+                                    ${isRTL ? "right-10 text-right" : "left-10 text-left"}
+                                    text-sm text-black/40
+                                    pointer-events-none
+                                    animate-fade-slide
+                                `}
+                            >
+                                {placeholderTexts[placeholderIndex]}
+                            </span>
+                        )}
+
+                        {/* Input */}
                         <input
                             value={query}
                             onChange={(e) => {
@@ -216,8 +237,17 @@ export default function Header() {
                                 setActiveIndex(-1);
                             }}
                             onKeyDown={handleKeyDown}
-                            placeholder={t("header.search")}
-                            className="ml-2 bg-transparent outline-none text-sm flex-1"
+                            dir={isRTL ? "rtl" : "ltr"}
+                            className={`
+                                ml-2
+                                bg-transparent
+                                outline-none
+                                text-sm
+                                flex-1
+                                relative
+                                z-10
+                                ${isRTL ? "text-right" : "text-left"}
+                            `}
                         />
                     </div>
 
@@ -234,7 +264,7 @@ export default function Header() {
                                         setActiveIndex(-1);
                                     }}
                                     className={`w-full text-left px-4 py-2 text-sm ${index === activeIndex
-                                            ? "bg-[var(--color-secondary)] text-[var(--color-dark-1)]"
+                                            ? "bg-[var(--color-secondary)]"
                                             : "hover:bg-[var(--color-white-4)]"
                                         }`}
                                 >

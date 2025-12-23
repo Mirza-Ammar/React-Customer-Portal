@@ -167,13 +167,13 @@ export default function DeliveryOrdersView() {
                             <div className="h-px bg-[var(--color-white-5)] my-1" />
 
                             <SelectItem value="CONFIRMED">
-                                {t("deliveryOrders.status.confirmed")}
+                                {t("status.confirmed")}
                             </SelectItem>
                             <SelectItem value="PENDING">
                                 {t("status.pending")}
                             </SelectItem>
                             <SelectItem value="CANCELLED">
-                                {t("deliveryOrders.status.cancelled")}
+                                {t("status.cancelled")}
                             </SelectItem>
                         </SelectContent>
                     </Select>
