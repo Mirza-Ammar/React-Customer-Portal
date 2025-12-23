@@ -1,0 +1,454 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+
+.login-root {
+    display: flex;
+    height: 100vh;
+    background: white;
+    padding: 16px;
+    /* ✅ spacing restored */
+    box-sizing: border-box;
+    /* ✅ prevents overflow */
+}
+
+
+.left-panel,
+.right-panel {
+    flex: 1;
+}
+
+.left-panel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 24px;
+}
+
+.logo {
+    width: 248px;
+    height: 67.33px;
+    object-fit: contain;
+}
+
+
+.form-container {
+    max-width: 520px;
+    width: 100%;
+    padding: 24px;
+    text-align: center;
+}
+
+/* Left-align form content */
+.form-left {
+    text-align: left;
+}
+
+/* Keep headings centered (like Flutter Center widget) */
+.form-left h2,
+.form-left .subtitle {
+    text-align: center;
+}
+
+/* Shared form label style (Flutter: AppTextStyles.medium + verticalSpaceSmall) */
+.form-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    /* ✅ FontWeight.w500 */
+    color: #000000;
+    /* kcDarkColor2 */
+    margin-bottom: 8px;
+    /* ✅ verticalSpaceSmall */
+}
+
+/* Wrapper spacing (Flutter: verticalSpaceMedium + Center) */
+.order-rate-wrapper {
+    margin-top: 24px;
+    text-align: center;
+}
+
+/* Base text */
+.order-rate-text {
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    /* Regular */
+    line-height: 140%;
+    letter-spacing: -0.01em;
+    /* -1% */
+    color: #808080;
+    /* kcDarkColor3 */
+}
+
+/* Clickable span */
+.order-rate-link {
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    /* Medium */
+    line-height: 140%;
+    letter-spacing: -0.01em;
+    color: var(--color-primary);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+
+
+.phone-row {
+    display: flex;
+    gap: 8px;
+}
+
+.phone-row input {
+    flex: 1;
+}
+
+.otp-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.otp-row input {
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    font-size: 18px;
+}
+
+/* ACTIVE / FOCUSED OTP BOX */
+.otp-row input:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 1px var(--color-primary);
+    outline: none;
+}
+
+.otp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 6px;
+}
+
+.otp-header-left {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.otp-sent-text {
+    font-size: 12px;
+    font-weight: 400;
+    /* NOT bold */
+    color: #808080;
+    /* matches kcDarkColor3 */
+}
+
+
+/* RIGHT PANEL OUTER (Container + margin + radius) */
+.right-panel {
+    flex: 1;
+    border-radius: 16px;
+    background: var(--color-primary);
+    color: white;
+    display: flex;
+    overflow: hidden;
+}
+
+/* Equivalent of Center() */
+/* Equivalent to Center() */
+.right-panel-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* 🔥 vertical centering */
+    overflow: hidden;
+    /* 🔥 prevents bleed */
+}
+
+
+
+/* Equivalent of LayoutBuilder + ConstrainedBox */
+/* Equivalent to Column(mainAxisSize: MainAxisSize.min) */
+.right-panel-content {
+    width: 100%;
+    padding: 32px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    /* 🔥 THIS IS THE FIX */
+    flex-shrink: 0;
+}
+
+
+/* Max-width logic from Flutter */
+@media (min-width: 560px) {
+    .right-panel-content {
+        max-width: 445px;
+    }
+}
+
+@media (max-width: 559px) {
+    .right-panel-content {
+        max-width: 90%;
+    }
+}
+
+/* IMAGE (AspectRatio 490 / 369) */
+.right-panel-image {
+    width: 100%;
+    aspect-ratio: 490 / 369;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* TEXT BLOCK (AspectRatio 419 / 177) */
+.right-panel-text {
+    width: 95%;
+    aspect-ratio: 419 / 177;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    margin-top: 16px;
+}
+
+.right-panel-text h3 {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.right-panel-text p {
+    font-size: 13px;
+    line-height: 1.5;
+    opacity: 0.85;
+}
+
+/* Divider */
+.right-panel-divider {
+    width: 60px;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.5);
+    margin: 10px auto;
+}
+
+/* FEATURE ROW */
+.feature-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.feature-card {
+    position: relative;
+    width: 135.71px;
+    height: 139.9px;
+
+    border-radius: 8.38px;
+    padding: 13.4px 19.27px;
+
+    background:
+        linear-gradient(0deg,
+            rgba(255, 255, 255, 0.1),
+            rgba(255, 255, 255, 0.1)),
+        linear-gradient(180deg,
+            rgba(255, 255, 255, 0.2) 0%,
+            rgba(255, 255, 255, 0) 100%);
+
+    backdrop-filter: blur(3.35px);
+    -webkit-backdrop-filter: blur(3.35px);
+
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.12);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+    /* ✅ critical */
+}
+
+
+
+/* INNER GRADIENT LAYERS */
+.feature-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    height: 100%;
+    width: 100%;
+}
+
+
+
+/* ICON */
+.feature-icon {
+    height: 44px;
+    /* 🔥 fixed slot */
+    width: 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+
+    font-size: 22px;
+    line-height: 1;
+    margin-bottom: 6px;
+}
+
+
+/* TEXT */
+.feature-title {
+    height: 32px;
+    /* 🔥 fixed slot */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.2;
+
+    margin-bottom: 2px;
+}
+
+
+.feature-subtitle {
+    height: 32px;
+    /* fixed slot */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 11px;
+    opacity: 0.85;
+    line-height: 1.2;
+    text-align: center;
+}
+
+/* 🔒 FIRST LINE — NEVER WRAP */
+.subtitle-line-1 {
+    white-space: nowrap;
+}
+
+/* SECOND LINE */
+.subtitle-line-2 {
+    white-space: nowrap;
+}
+
+/* ===================================================== */
+/* =============== MOBILE RESPONSIVE ONLY ============== */
+/* ===================================================== */
+
+@media (max-width: 768px) {
+
+    html,
+    body {
+        overflow: auto;
+        height: auto;
+    }
+
+    /* Stack panels vertically but reverse order */
+    .login-root {
+        flex-direction: column-reverse;
+        height: auto;
+        padding: 0;
+    }
+
+    /* RIGHT PANEL → TOP */
+    .right-panel {
+        display: flex;
+        width: 100%;
+        height: 45vh;
+        border-radius: 0;
+    }
+
+    .right-panel-center {
+        align-items: center;
+    }
+
+    .right-panel-content {
+        padding: 24px 16px;
+    }
+
+    /* Hide feature cards on mobile */
+    .feature-row {
+        display: none;
+    }
+
+    /* LEFT PANEL → FORM BELOW */
+    .left-panel {
+        width: 100%;
+        min-height: auto;
+        padding: 16px;
+        align-items: flex-start;
+    }
+
+    .left-panel .logo-wrapper {
+        display: none;
+    }
+
+    .form-container {
+        max-width: 100%;
+        padding: 16px 8px;
+    }
+
+    .form-left h2 {
+        font-size: 20px;
+        line-height: 1.3;
+    }
+
+    .form-left .subtitle {
+        font-size: 15px;
+        line-height: 1.4;
+    }
+
+    /* OTP sizing */
+    .otp-row {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .otp-row input {
+        flex: 1;
+        max-width: none;
+        border-color: rgba(0, 0, 0, 0.2);
+    }
+
+    /* ACTIVE / FOCUSED OTP BOX */
+    .otp-row input:focus {
+        border-color: var(--color-primary);
+        box-shadow: 0 0 0 1px var(--color-primary);
+        outline: none;
+    }
+}

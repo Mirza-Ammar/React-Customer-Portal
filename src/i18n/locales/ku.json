@@ -1,0 +1,216 @@
+{
+    "common": {
+        "search": "گەڕان بکە...",
+        "confirm": "پشتڕاستکردنەوە",
+        "sending": "ناردن...",
+        "previous": "پێشوو",
+        "next": "دواتر",
+        "itemsPerPage": "العناصر لكل صفحة",
+        "all": "هەموو"
+    },
+    "login": {
+        "welcome": "بەخێربێیت",
+        "subtitle": "بچۆ ژوورەوە بە ژمارەی مۆبایل بۆ چوونە ناو پۆرتاڵ",
+        "phoneLabel": "ژمارەی مۆبایل بنووسە",
+        "sendCode": "ناردنی کۆدی پشتڕاستکردنەوە",
+        "selectBranch": "لق هەڵبژێرە",
+        "changeNumber": "گۆڕینی ژمارە",
+        "enterOtp": "کۆدی 6 ژمارەیی بنووسە",
+        "verify": "پشتڕاستکردنەوە و چوونەژوورەوە",
+        "verifying": "پشتڕاستکردنەوە...",
+        "resend": "دووبارە ناردن",
+        "resendIn": "دووبارە ناردن لە {{seconds}} چرکەدا",
+        "orderRate": "دەتەوێت نرخی داواکاری بزانیت؟",
+        "checkNow": "ئێستا بپشکنە"
+    },
+    "header": {
+        "individual": "فردي",
+        "search": "ابحث هنا... "
+    },
+    "menu": {
+        "dashboard": "داشبۆرد",
+        "lawyerProfile": "پڕۆفایلی پارێزەر",
+        "address": "ناونیشان",
+        "epNumber": "ژمارەی EP",
+        "poBox": "صندوقی پۆستە",
+        "poBoxDetails": "وردەکاری صندوقی پۆستە",
+        "poBoxItems": "بابەتەکانی صندوقی پۆستە",
+        "iqamaOrder": "داواکاری ئیقامە",
+        "orders": "داواکارییەکان",
+        "deliveryOrders": "داواکاری گەیاندن",
+        "internationalOrders": "داواکاری نێودەوڵەتی",
+        "clickShipOrders": "داواکاری Click Ship",
+        "shipmentTracking": "بەدواداچوونی گەیاندن",
+        "support": "یارمەتیدان",
+        "settings": "ڕێکخستنەکان",
+        "help": "یارمەتی"
+    },
+    "address": {
+        "title": "ناونیشانەکان",
+        "noAddress": "هیچ ناونیشانێک نییە",
+        "search": "گەڕان...",
+        "add": "+ زیادکردنی ناونیشان",
+        "columns": {
+            "address": "ناونیشان",
+            "contact": "ژمارەی پەیوەندی",
+            "label": "ناونیشان",
+            "note": "تێبینی",
+            "status": "دۆخ",
+            "inUse": "بەکارهاتوو",
+            "unused": "بەکارنەهاتوو"
+        }
+    },
+    "status": {
+        "pending": "چاوەڕوان",
+        "paid": "پارەدراو",
+        "unpaid": "پارەدراو",
+        "received": "وەرگیراو",
+        "delivered": "گەیاندراو",
+        "confirmed": "پشتڕاستکراو",
+        "cancelled": "هەڵوەشاوە"
+    },
+    "epNumber": {
+        "dateApplied": "بەرواری داواکاری",
+        "issuedDate": "بەرواری دەرچوون",
+        "totalDocuments": "کۆی بەڵگەنامەکان",
+        "personalInfo": "زانیاری کەسی",
+        "contactInfo": "زانیاری پەیوەندی",
+        "fullName": "ناوی تەواو",
+        "nationality": "نەتەوە",
+        "dob": "بەرواری لەدایکبوون",
+        "idNumber": "ژمارەی ناسنامە",
+        "phone": "ژمارەی پەیوەندی",
+        "address": "ناونیشان",
+        "email": "ئیمەیڵ",
+        "poBox": "صندوقی پۆستە"
+    },
+    "iqama": {
+        "id": "ناسنامە",
+        "orderCode": "کۆدی داواکاری",
+        "status": "دۆخ",
+        "name": "ناو",
+        "receiver": "زانیاری وەرگر",
+        "passport": "پاسپۆرت",
+        "price": "نرخ",
+        "created": "دروستکراو",
+        "updated": "نوێکراو",
+        "paymentType": "جۆری پارەدان",
+        "paymentStatus": "دۆخی پارەدان",
+        "requestIqamaOrder": "طلب أمر إقامةr",
+        "search": "ابحث هنا... "
+    },
+    "poBox": {
+        "dateApplied": "بەرواری داواکاری",
+        "issuingDate": "بەرواری دەرچوون",
+        "expiryDate": "بەرواری بەسەرچوون",
+        "info": "زانیاری صندوقی پۆستە",
+        "frame": "چوارچێوە",
+        "nationality": "نەتەوە",
+        "dob": "بەرواری لەدایکبوون",
+        "phone": "ژمارەی پەیوەندی",
+        "address": "ناونیشان",
+        "paymentInfo": "زانیاری پارەدان",
+        "subscription": "ئابوونەی پارەدان",
+        "methodStatus": "شێوازی پارەدان / دۆخ",
+        "transactionDate": "بەرواری مامەڵەی پارەدان",
+        "transactionId": "ژمارەی مامەڵە"
+    },
+    "poBoxItems": {
+        "id": "ناسنامە",
+        "orderCode": "کۆدی داواکاری",
+        "source": "سەرچاوە / نێرەر",
+        "reference": "ژمارەی ئاماژە",
+        "description": "وەسف",
+        "note": "تێبینی",
+        "location": "شوێن",
+        "createdBy": "دروستکراو لەلایەن",
+        "createdAt": "بەرواری دروستکردن",
+        "status": "دۆخ",
+        "search": "گەڕان",
+        "selectDate": "بەروار هەڵبژێرە",
+        "selectType": "جۆر هەڵبژێرە",
+        "selectStatus": "دۆخ هەڵبژێرە",
+        "today": "ئەمڕۆ",
+        "thisWeek": "ئەم هەفتەیە",
+        "electronics": "ئەلیکترۆنیات",
+        "documents": "بەڵگەنامەکان"
+    },
+    "deliveryOrders": {
+        "searchPlaceholder": "داواکاری، نێرەر یان وەرگر بگەڕێ",
+        "selectStatus": "دۆخ هەڵبژێرە",
+        "requestDelivery": "+ داواکاری گەیاندن",
+        "columns": {
+            "epCode": "کۆدی EP",
+            "orderCode": "کۆدی داواکاری",
+            "senderName": "ناوی نێرەر",
+            "receiverName": "ناوی وەرگر",
+            "price": "نرخ",
+            "paymentType": "جۆری پارەدان",
+            "createdDate": "بەرواری دروستکردن",
+            "updatedDate": "بەرواری نوێکردنەوە",
+            "status": "دۆخ"
+        }
+    },
+    "internationalOrders": {
+        "searchPlaceholder": "گەڕان بە شحنە یان EP/PO",
+        "selectStatus": "دۆخ هەڵبژێرە",
+        "requestDelivery": "+ داواکاری گەیاندن",
+        "columns": {
+            "shipmentCode": "کۆدی شحنە",
+            "domesticId": "المعرف المحلي",
+            "epPoNumber": "ژمارەی EP/PO",
+            "price": "نرخ",
+            "location": "شوێن",
+            "paymentStatus": "دۆخی پارەدان",
+            "status": "دۆخ",
+            "updatedDate": "بەرواری نوێکردنەوە"
+        }
+    },
+    "clickShipOrders": {
+        "searchPlaceholder": "گەڕان بە ژمارەی شوێنکەوتن",
+        "selectStatus": "دۆخ هەڵبژێرە",
+        "howToUse": "چۆنیەتی بەکارهێنان",
+        "requestOrder": "+ داواکاری Click Ship",
+        "columns": {
+            "price": "نرخ",
+            "weight": "کێش",
+            "country": "وڵات",
+            "trackNumber": "ژمارەی شوێنکەوتن",
+            "paymentStatus": "دۆخی پارەدان",
+            "status": "دۆخ",
+            "createdDate": "بەرواری دروستکردن",
+            "updatedDate": "بەرواری نوێکردنەوە"
+        }
+    },
+    "internationalOrdersDetail": {
+        "title": "زانیاری داواکاری (داواکاری هاتوو)",
+        "payNow": "ئێستا پارە بدە",
+        "shipmentTracking": "بەدواداچوونی شحنە",
+        "fields": {
+            "orderStatus": "دۆخی داواکاری:",
+            "domesticId": "ناسنامەی ناوخۆیی:",
+            "currentPlace": "شوێنی ئێستا:",
+            "createdAt": "بەرواری دروستکردن:",
+            "price": "نرخ:",
+            "poBoxNumber": "ژمارەی صندوقی پۆستە:",
+            "shipmentCode": "کۆدی شحنە:",
+            "epNumber": "ژمارەی EP:",
+            "updatedAt": "نوێترین گۆڕانکاری:",
+            "category": "پۆل:",
+            "note": "تێبینی:",
+            "describeShipment": "وەسفی شحنە:"
+        },
+        "payment": {
+            "title": "زانیاری پارەدان",
+            "status": "دۆخی پارەدان:",
+            "method": "شێوازی پارەدان:"
+        },
+        "pickup": {
+            "title": "زانیاری وەرگرتن",
+            "shipperId": "ناسنامەی ناونیشانی نێرەر:",
+            "receiverId": "ناسنامەی ناونیشانی وەرگر:",
+            "shipperAddress": "ناونیشانی نێرەر:",
+            "receiverAddress": "ناونیشانی وەرگر:"
+        }
+    }
+}

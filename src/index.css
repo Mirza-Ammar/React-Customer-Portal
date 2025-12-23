@@ -1,0 +1,183 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ================================
+   INTER FONT (ENGLISH)
+================================ */
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/Inter-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/Inter-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/Inter-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/Inter-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+/* ================================
+   NOTO KUFI ARABIC (AR + KU)
+================================ */
+@font-face {
+  font-family: "Noto Kufi Arabic";
+  src: url("/fonts/NotoKufiArabic-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Noto Kufi Arabic";
+  src: url("/fonts/NotoKufiArabic-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Noto Kufi Arabic";
+  src: url("/fonts/NotoKufiArabic-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Noto Kufi Arabic";
+  src: url("/fonts/NotoKufiArabic-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+/* ================================
+   CSS VARIABLES
+================================ */
+:root {
+  /* Dark colors */
+  --color-dark-1: #000201;
+  --color-dark-2: #545555;
+  --color-dark-3: #808080;
+  --color-dark-4: #A7A7A7;
+  --color-dark-5: #CCCCCC;
+
+  /* White colors */
+  --color-white-1: #FFFFFF;
+  --color-white-2: #F9F9F9;
+  --color-white-3: #F8F8F8;
+  --color-white-4: #F5F5F5;
+  --color-white-5: #EFEFEF;
+  --color-white-6: #F4F6F7;
+
+  /* Different */
+  --color-different-1: #FAF9E7;
+
+  /* Background */
+  --color-page-background: #FAFAFA;
+
+  /* Status colors */
+  --color-success: #0FA049;
+  --color-warning: #FC8F01;
+  --color-error: #FF5252;
+
+  /* Chip colors */
+  --color-chip-success: #3DD59829;
+  --color-chip-warning: #FC8F0129;
+  --color-chip-error: #F3686829;
+
+  /* Brand colors */
+  --color-primary: #013298;
+  --color-secondary: #FECD01;
+}
+
+/* ================================
+   SHADCN / TAILWIND BASE
+================================ */
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+  }
+}
+
+/* ================================
+   GLOBAL BASE STYLES
+================================ */
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+}
+
+/* ================================
+   LANGUAGE-SPECIFIC TYPOGRAPHY
+================================ */
+html[lang="ar"],
+html[lang="ku"] {
+  font-family: "Noto Kufi Arabic", system-ui, sans-serif;
+  line-height: 1.6;
+}
+
+html[lang="ar"] body,
+html[lang="ku"] body {
+  font-family: "Noto Kufi Arabic", system-ui, sans-serif;
+}

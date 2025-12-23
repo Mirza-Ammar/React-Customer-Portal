@@ -1,0 +1,16 @@
+// import { useState } from "react";
+// import { ExampleViewModel } from "./ExampleViewModel";
+
+// export default function ExampleView() {
+//     const [vm] = useState(() => new ExampleViewModel());
+//     const [, forceUpdate] = useState(0);
+
+//     return <div className="h-full" />;
+// }
+
+
+
+
+// export class ExampleViewModel {
+//     // TODO: add state & actions
+// }

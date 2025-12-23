@@ -1,0 +1,215 @@
+{
+    "common": {
+        "confirm": "تأكيد",
+        "sending": "جارٍ الإرسال...",
+        "previous": "السابق",
+        "next": "التالي",
+        "itemsPerPage": "العناصر لكل صفحة",
+        "all": "الكل"
+    },
+    "login": {
+        "welcome": "مرحباً",
+        "subtitle": "سجّل الدخول باستخدام رقم هاتفك للوصول إلى بوابتك",
+        "phoneLabel": "أدخل رقم هاتفك",
+        "sendCode": "إرسال رمز التحقق",
+        "selectBranch": "اختر الفرع",
+        "changeNumber": "تغيير الرقم",
+        "enterOtp": "أدخل رمز مكون من 6 أرقام",
+        "verify": "تحقق وتسجيل الدخول",
+        "verifying": "جارٍ التحقق...",
+        "resend": "إعادة الإرسال",
+        "resendIn": "إعادة الإرسال خلال {{seconds}} ثانية",
+        "orderRate": "هل تريد التحقق من سعر الطلب؟",
+        "checkNow": "تحقق الآن"
+    },
+    "header": {
+        "individual": "فردي",
+        "search": "ابحث هنا..."
+    },
+    "menu": {
+        "dashboard": "لوحة التحكم",
+        "lawyerProfile": "ملف المحامي",
+        "address": "العناوين",
+        "epNumber": "رقم EP",
+        "poBox": "صندوق البريد",
+        "poBoxDetails": "تفاصيل صندوق البريد",
+        "poBoxItems": "عناصر صندوق البريد",
+        "iqamaOrder": "طلب إقامة",
+        "orders": "الطلبات",
+        "deliveryOrders": "طلبات التوصيل",
+        "internationalOrders": "طلبات دولية",
+        "clickShipOrders": "طلبات Click Ship",
+        "shipmentTracking": "تتبع الشحنات",
+        "support": "الدعم",
+        "settings": "الإعدادات",
+        "help": "مساعدة"
+    },
+    "address": {
+        "title": "العناوين",
+        "noAddress": "لا توجد عناوين",
+        "search": "بحث...",
+        "add": "+ إضافة عنوان",
+        "columns": {
+            "address": "العنوان",
+            "contact": "رقم الاتصال",
+            "label": "التسمية",
+            "note": "ملاحظة",
+            "status": "الحالة",
+            "inUse": "مستخدم",
+            "unused": "غير مستخدم"
+        }
+    },
+    "status": {
+        "pending": "قيد الانتظار",
+        "paid": "مدفوع",
+        "unpaid": "مدفوع",
+        "received": "تم الاستلام",
+        "delivered": "تم التسليم",
+        "confirmed": "مؤكد",
+        "cancelled": "ملغي"
+    },
+    "epNumber": {
+        "dateApplied": "تاريخ التقديم",
+        "issuedDate": "تاريخ الإصدار",
+        "totalDocuments": "إجمالي المستندات",
+        "personalInfo": "المعلومات الشخصية",
+        "contactInfo": "معلومات الاتصال",
+        "fullName": "الاسم الكامل",
+        "nationality": "الجنسية",
+        "dob": "تاريخ الميلاد",
+        "idNumber": "رقم الهوية",
+        "phone": "رقم الاتصال",
+        "address": "العنوان",
+        "email": "البريد الإلكتروني",
+        "poBox": "صندوق البريد"
+    },
+    "iqama": {
+        "id": "المعرف",
+        "orderCode": "رمز الطلب",
+        "status": "الحالة",
+        "name": "الاسم",
+        "receiver": "بيانات المستلم",
+        "passport": "جواز السفر",
+        "price": "السعر",
+        "created": "تاريخ الإنشاء",
+        "updated": "آخر تحديث",
+        "paymentType": "نوع الدفع",
+        "paymentStatus": "حالة الدفع",
+        "requestIqamaOrder": "طلب أمر إقامةr",
+        "search": "ابحث هنا... "
+    },
+    "poBox": {
+        "dateApplied": "تاريخ التقديم",
+        "issuingDate": "تاريخ الإصدار",
+        "expiryDate": "تاريخ الانتهاء",
+        "info": "معلومات صندوق البريد",
+        "frame": "الإطار",
+        "nationality": "الجنسية",
+        "dob": "تاريخ الميلاد",
+        "phone": "رقم الاتصال",
+        "address": "العنوان",
+        "paymentInfo": "معلومات الدفع",
+        "subscription": "اشتراك الدفع",
+        "methodStatus": "طريقة الدفع / الحالة",
+        "transactionDate": "تاريخ عملية الدفع",
+        "transactionId": "رقم العملية"
+    },
+    "poBoxItems": {
+        "id": "المعرف",
+        "orderCode": "رمز الطلب",
+        "source": "المصدر / المرسل",
+        "reference": "الرقم المرجعي",
+        "description": "الوصف",
+        "note": "ملاحظة",
+        "location": "الموقع",
+        "createdBy": "أُنشئ بواسطة",
+        "createdAt": "تاريخ الإنشاء",
+        "status": "الحالة",
+        "search": "بحث",
+        "selectDate": "اختر التاريخ",
+        "selectType": "اختر النوع",
+        "selectStatus": "اختر الحالة",
+        "today": "اليوم",
+        "thisWeek": "هذا الأسبوع",
+        "electronics": "إلكترونيات",
+        "documents": "مستندات"
+    },
+    "deliveryOrders": {
+        "searchPlaceholder": "ابحث عن الطلب، المرسل، المستلم",
+        "selectStatus": "اختر الحالة",
+        "requestDelivery": "+ طلب توصيل",
+        "columns": {
+            "epCode": "رمز EP",
+            "orderCode": "رمز الطلب",
+            "senderName": "اسم المرسل",
+            "receiverName": "اسم المستلم",
+            "price": "السعر",
+            "paymentType": "نوع الدفع",
+            "createdDate": "تاريخ الإنشاء",
+            "updatedDate": "تاريخ التحديث",
+            "status": "الحالة"
+        }
+    },
+    "internationalOrders": {
+        "searchPlaceholder": "ابحث عن الشحنة أو EP/PO",
+        "selectStatus": "اختر الحالة",
+        "requestDelivery": "+ طلب توصيل",
+        "columns": {
+            "shipmentCode": "رمز الشحنة",
+            "domesticId": "المعرف المحلي",
+            "epPoNumber": "رقم EP/PO",
+            "price": "السعر",
+            "location": "الموقع",
+            "paymentStatus": "حالة الدفع",
+            "status": "الحالة",
+            "updatedDate": "تاريخ التحديث"
+        }
+    },
+    "clickShipOrders": {
+        "searchPlaceholder": "ابحث برقم التتبع",
+        "selectStatus": "اختر الحالة",
+        "howToUse": "كيفية الاستخدام",
+        "requestOrder": "+ طلب Click Ship",
+        "columns": {
+            "price": "السعر",
+            "weight": "الوزن",
+            "country": "الدولة",
+            "trackNumber": "رقم التتبع",
+            "paymentStatus": "حالة الدفع",
+            "status": "الحالة",
+            "createdDate": "تاريخ الإنشاء",
+            "updatedDate": "تاريخ التحديث"
+        }
+    },
+    "internationalOrdersDetail": {
+        "title": "معلومات الطلب (طلب وارد)",
+        "payNow": "ادفع الآن",
+        "shipmentTracking": "تتبع الشحنة",
+        "fields": {
+            "orderStatus": "حالة الطلب:",
+            "domesticId": "المعرف المحلي:",
+            "currentPlace": "الموقع الحالي:",
+            "createdAt": "تاريخ الإنشاء:",
+            "price": "السعر:",
+            "poBoxNumber": "رقم صندوق البريد:",
+            "shipmentCode": "رمز الشحنة:",
+            "epNumber": "رقم EP:",
+            "updatedAt": "آخر تحديث:",
+            "category": "الفئة:",
+            "note": "ملاحظة:",
+            "describeShipment": "وصف الشحنة:"
+        },
+        "payment": {
+            "title": "معلومات الدفع",
+            "status": "حالة الدفع:",
+            "method": "طريقة الدفع:"
+        },
+        "pickup": {
+            "title": "معلومات الاستلام",
+            "shipperId": "معرف عنوان المرسل:",
+            "receiverId": "معرف عنوان المستلم:",
+            "shipperAddress": "عنوان المرسل:",
+            "receiverAddress": "عنوان المستلم:"
+        }
+    }
+}

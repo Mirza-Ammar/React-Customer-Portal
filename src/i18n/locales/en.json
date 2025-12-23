@@ -1,0 +1,215 @@
+{
+    "common": {
+        "confirm": "Confirm",
+        "sending": "Sending...",
+        "previous": "Previous",
+        "next": "Next",
+        "itemsPerPage": "Items per page",
+        "all": "All"
+    },
+    "login": {
+        "welcome": "Welcome",
+        "subtitle": "Sign in with your phone number to access your portal",
+        "enterPhone": "Enter your Phone Number",
+        "sendCode": "Send Verification Code",
+        "selectBranch": "Select your branch",
+        "changeNumber": "Change number",
+        "enterOtp": "Enter 6-Digit Code",
+        "verify": "Verify & Sign In",
+        "verifying": "Verifying...",
+        "resend": "Resend code",
+        "resendIn": "Resend in {{seconds}}s",
+        "orderRate": "Do you want to check your order rate?",
+        "checkNow": "Check Now"
+    },
+    "header": {
+        "individual": "Individual",
+        "search": "Search here..."
+    },
+    "menu": {
+        "dashboard": "Dashboard",
+        "lawyerProfile": "Lawyer Profile",
+        "address": "Address",
+        "epNumber": "EP Number",
+        "poBox": "PO Box",
+        "poBoxDetails": "PO Box Details",
+        "poBoxItems": "PO Box Items",
+        "iqamaOrder": "Iqama Order",
+        "orders": "Orders",
+        "deliveryOrders": "Delivery Orders",
+        "internationalOrders": "International Orders",
+        "clickShipOrders": "Click Ship Orders",
+        "shipmentTracking": "Shipment Tracking",
+        "support": "Support",
+        "settings": "Settings",
+        "help": "Help"
+    },
+    "address": {
+        "title": "Address",
+        "noAddress": "No Address Available",
+        "search": "Search...",
+        "add": "+ Add New Address",
+        "columns": {
+            "address": "Address",
+            "contact": "Contact Number",
+            "label": "Label",
+            "note": "Note",
+            "status": "Status",
+            "inUse": "IN USE",
+            "unused": "UNUSED"
+        }
+    },
+    "status": {
+        "pending": "PENDING",
+        "paid": "PAID",
+        "unpaid": "UNPAID",
+        "received": "RECIEVED",
+        "delivered": "DELIVERED",
+        "confirmed": "CONFIRMED",
+        "cancelled": "CANCELLED"
+    },
+    "epNumber": {
+        "dateApplied": "Date Applied",
+        "issuedDate": "Issued Date",
+        "totalDocuments": "Total Documents",
+        "personalInfo": "Personal information",
+        "contactInfo": "Contact information",
+        "fullName": "Full name",
+        "nationality": "Nationality",
+        "dob": "Date of birth",
+        "idNumber": "ID Number",
+        "phone": "Contact number",
+        "address": "Address",
+        "email": "Email Address",
+        "poBox": "PO Box"
+    },
+    "iqama": {
+        "id": "ID",
+        "orderCode": "Order code",
+        "status": "Status",
+        "name": "Name",
+        "receiver": "Receiver details",
+        "passport": "Passport",
+        "price": "Price",
+        "created": "Created",
+        "updated": "Updated",
+        "paymentType": "Payment Type",
+        "paymentStatus": "Status",
+        "requestIqamaOrder": "Request Iqama Order",
+        "search": "Search"
+    },
+    "poBox": {
+        "dateApplied": "Date applied",
+        "issuingDate": "Issuing date",
+        "expiryDate": "Expiry date",
+        "info": "PO Box information",
+        "frame": "Frame",
+        "nationality": "Nationality",
+        "dob": "Date of birth",
+        "phone": "Contact number",
+        "address": "Address",
+        "paymentInfo": "Payment information",
+        "subscription": "Payment subscription",
+        "methodStatus": "Payment method / Status",
+        "transactionDate": "Payment transaction date",
+        "transactionId": "Transaction ID"
+    },
+    "poBoxItems": {
+        "id": "ID",
+        "orderCode": "Order code",
+        "source": "Source / Sender",
+        "reference": "Reference number",
+        "description": "Description",
+        "note": "Note",
+        "location": "Location",
+        "createdBy": "Created by",
+        "createdAt": "Created at",
+        "status": "Status",
+        "search": "Search",
+        "selectDate": "Select date",
+        "selectType": "Select type",
+        "selectStatus": "Select status",
+        "today": "Today",
+        "thisWeek": "This week",
+        "electronics": "Electronics",
+        "documents": "Documents"
+    },
+    "deliveryOrders": {
+        "searchPlaceholder": "Search order, sender, receiver",
+        "selectStatus": "Select status",
+        "requestDelivery": "+ Request Delivery",
+        "columns": {
+            "epCode": "EP code",
+            "orderCode": "Order code",
+            "senderName": "Sender name",
+            "receiverName": "Receiver name",
+            "price": "Price",
+            "paymentType": "Payment type",
+            "createdDate": "Created date",
+            "updatedDate": "Updated date",
+            "status": "Status"
+        }
+    },
+    "internationalOrders": {
+        "searchPlaceholder": "Search shipment, EP/PO",
+        "selectStatus": "Select status",
+        "requestDelivery": "+ Request Delivery",
+        "columns": {
+            "shipmentCode": "Shipment code",
+            "domesticId": "Domestic ID",
+            "epPoNumber": "EP/PO number",
+            "price": "Price",
+            "location": "Location",
+            "paymentStatus": "Payment status",
+            "status": "Status",
+            "updatedDate": "Updated date"
+        }
+    },
+    "clickShipOrders": {
+        "searchPlaceholder": "Search track number",
+        "selectStatus": "Select status",
+        "howToUse": "How to Use",
+        "requestOrder": "+ Request click ship orders",
+        "columns": {
+            "price": "Price",
+            "weight": "Weight",
+            "country": "Country",
+            "trackNumber": "Track number",
+            "paymentStatus": "Payment status",
+            "status": "Status",
+            "createdDate": "Created date",
+            "updatedDate": "Updated date"
+        }
+    },
+    "internationalOrdersDetail": {
+        "title": "Order information (Inbound order)",
+        "payNow": "Pay Now",
+        "shipmentTracking": "Shipment Tracking",
+        "fields": {
+            "orderStatus": "Order status:",
+            "domesticId": "Domestic ID:",
+            "currentPlace": "Current place:",
+            "createdAt": "Created at:",
+            "price": "Price:",
+            "poBoxNumber": "PO Box number:",
+            "shipmentCode": "Shipment code:",
+            "epNumber": "EP number:",
+            "updatedAt": "Last updated date:",
+            "category": "Category:",
+            "note": "Note:",
+            "describeShipment": "Describe shipment:"
+        },
+        "payment": {
+            "title": "Payment information",
+            "status": "Payment status:",
+            "method": "Payment method:"
+        },
+        "pickup": {
+            "title": "Pickup information",
+            "shipperId": "Shipper address ID:",
+            "receiverId": "Receiver address ID:",
+            "shipperAddress": "Shipper address:",
+            "receiverAddress": "Receiver address:"
+        }
+    }
+}
