@@ -11,6 +11,11 @@ export const GLOBAL_SEARCH_ITEMS: GlobalSearchItem[] = [
         route: "/app",
     },
     {
+        key: "lawyerProfile",
+        labelKey: "menu.lawyerProfile",
+        route: "/app/lawyer-profile",
+    },
+    {
         key: "epNumber",
         labelKey: "menu.epNumber",
         route: "/app/ep-number",

@@ -203,6 +203,7 @@ export default function LoginView() {
                                         onChange={(e) => {
                                             const v = e.target.value.replace(/\D/g, "").slice(-1);
                                             vm.otp[i] = v;
+                                            vm.otpError = ""; // ✅ clear error while typing
                                             rebuild();
                                             if (v && i < 5) {
                                                 otpRefs.current[i + 1]?.focus();
@@ -216,6 +217,13 @@ export default function LoginView() {
                                     />
                                 ))}
                             </div>
+
+                            {vm.otpError && (
+                                <p className="mt-2 text-sm text-red-600 text-center">
+                                    {t(vm.otpError)}
+                                </p>
+                            )}
+
 
                             <Button
                                 className="w-full mt-5 text-white"
@@ -233,6 +241,7 @@ export default function LoginView() {
                             </Button>
                         </>
                     )}
+
 
                     {vm.step === "branch" && (
                         <>

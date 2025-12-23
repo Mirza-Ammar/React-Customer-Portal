@@ -52,10 +52,11 @@ export class LoginViewModel {
             this.step = "branch";
             return true;
         } else {
-            this.otpError = "Invalid OTP. Please try again.";
+            this.otpError = "login.invalidOtp";
             return false;
         }
     }
+
 
     startResendTimer() {
         this.resendRemaining = 30;

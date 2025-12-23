@@ -14,6 +14,7 @@
         "sendCode": "Send Verification Code",
         "selectBranch": "Select your branch",
         "changeNumber": "Change number",
+        "invalidOtp": "Invalid OTP",
         "enterOtp": "Enter 6-Digit Code",
         "verify": "Verify & Sign In",
         "verifying": "Verifying...",
