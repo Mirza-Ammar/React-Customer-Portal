@@ -7,7 +7,7 @@ type Props<T> = {
     items: T[];
     columns: TableColumn<T>[];
 
-    searchQuery?: string; // 👈 NEW
+    searchQuery?: string;
 
     emptyState?: React.ReactNode;
     headerHeight?: number;
@@ -22,7 +22,7 @@ type Props<T> = {
 export default function StickyTable<T>({
     items,
     columns,
-    searchQuery = "", // 👈 DEFAULT
+    searchQuery = "",
     emptyState,
     headerHeight = 56,
     rowPadding = "px-3 py-3",
@@ -50,28 +50,36 @@ export default function StickyTable<T>({
 
         let content = rawContent;
 
-        // 🔥 TEXT HIGHLIGHT
-        if (
-            typeof rawContent === "string" &&
-            searchQuery
-        ) {
+        // 🔍 Highlight search text
+        if (typeof rawContent === "string" && searchQuery) {
             content = highlightText(rawContent, searchQuery);
         }
 
-        if (!enableCellCopy) return content;
+        // No copy → just render
+        if (!enableCellCopy || typeof rawContent !== "string") {
+            return (
+                <div className={`min-w-0 flex ${justify(col.align)}`}>
+                    {content}
+                </div>
+            );
+        }
 
         return (
             <div className={`relative min-w-0 flex ${justify(col.align)}`}>
                 <span
                     className={`
-                        block min-w-0 truncate cursor-pointer text-sm
+                        block min-w-0 truncate text-sm
+                        cursor-copy
                         transition-colors duration-200
                         ${isCopied
                             ? "text-[var(--color-primary)] font-bold"
                             : "text-[var(--color-dark-1)] font-normal"
                         }
                     `}
+                    title="Click to copy"
                     onClick={async (e) => {
+                        e.stopPropagation(); // 🔥 PREVENT ROW NAVIGATION
+
                         const text =
                             col.copyValue?.(row, rowIndex) ??
                             e.currentTarget.innerText?.trim();
@@ -86,8 +94,6 @@ export default function StickyTable<T>({
                                 current === key ? null : current
                             );
                         }, 500);
-
-                        onRowClick?.(row, rowIndex);
                     }}
                 >
                     {content}
@@ -136,14 +142,8 @@ export default function StickyTable<T>({
                         return (
                             <div key={rowIndex}>
                                 <HoverRow
-                                    onClick={
-                                        !enableCellCopy
-                                            ? () =>
-                                                onRowClick?.(
-                                                    row,
-                                                    rowIndex
-                                                )
-                                            : undefined
+                                    onClick={() =>
+                                        onRowClick?.(row, rowIndex)
                                     }
                                 >
                                     {(hover) => (
