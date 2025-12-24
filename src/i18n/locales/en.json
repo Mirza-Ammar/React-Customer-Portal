@@ -10,7 +10,7 @@
     "login": {
         "welcome": "Welcome",
         "subtitle": "Sign in with your phone number to access your portal",
-        "enterPhone": "Enter your Phone Number",
+        "phoneLabel": "Enter your Phone Number",
         "sendCode": "Send Verification Code",
         "selectBranch": "Select your branch",
         "changeNumber": "Change number",

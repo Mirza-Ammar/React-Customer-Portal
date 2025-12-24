@@ -63,6 +63,7 @@ body {
 /* Shared form label style (Flutter: AppTextStyles.medium + verticalSpaceSmall) */
 .form-label {
     display: block;
+    text-align: start;
     font-size: 14px;
     font-weight: 600;
     /* ✅ FontWeight.w500 */
