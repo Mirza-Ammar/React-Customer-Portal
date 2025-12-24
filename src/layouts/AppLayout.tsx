@@ -2,9 +2,11 @@ import { Outlet } from "react-router-dom";
 import Header from "@/components/table/Header";
 import SideMenu from "@/components/table/SideMenu";
 import { useDirection } from "@/i18n/useDirection"; // 👈 ADD THIS
+import { useKeyboardShortcuts } from "@/hooks/keyboardShortcuts";
 
 export default function AppLayout() {
     useDirection(); // 👈 CALL IT HERE (TOP LEVEL)
+    useKeyboardShortcuts();
 
     return (
         <div className="h-screen flex flex-col bg-[var(--color-page-background)]">

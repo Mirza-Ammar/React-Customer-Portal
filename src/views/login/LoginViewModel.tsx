@@ -1,6 +1,10 @@
+import { useAuth } from "@/hooks/useAuth";
+
 export type LoginStep = "phone" | "otp" | "branch";
 
 export class LoginViewModel {
+    private auth = useAuth();
+
     step: LoginStep = "phone";
     isBusy = false;
 
@@ -19,7 +23,7 @@ export class LoginViewModel {
 
     validatePhone() {
         if (!this.phone || this.phone.length < 8) {
-            this.error = "Enter a valid phone number";
+            this.error = "login.invalidPhone";
             return false;
         }
         this.error = "";
@@ -34,29 +38,53 @@ export class LoginViewModel {
         return this.otp.join("").length === 6;
     }
 
-    goToBranchStep() {
+    async sendOtp() {
         if (!this.validatePhone()) return;
-        this.step = "otp";
-        this.startResendTimer();
-    }
 
-    async verifyOtp(): Promise<boolean> {
         this.isBusy = true;
-        await new Promise((r) => setTimeout(r, 800));
+        this.error = "";
 
-        const enteredOtp = this.otp.join("");
-        this.isBusy = false;
+        try {
+            const cleanPhone = this.phone.replace(/\D/g, ""); // ✅ digits only
 
-        if (enteredOtp === "111111") {
-            this.otpError = "";
-            this.step = "branch";
-            return true;
-        } else {
-            this.otpError = "login.invalidOtp";
-            return false;
+            await this.auth.sendOtp({
+                phoneNumber: cleanPhone,
+                countryCode: this.selectedCountry,
+                sendSms: false,
+            });
+
+            this.phone = cleanPhone; // keep normalized value
+            this.step = "otp";
+            this.startResendTimer();
+        } catch (e: any) {
+            console.error(e);
+            this.error = e.message || "Failed to send OTP";
+        } finally {
+            this.isBusy = false;
         }
     }
 
+
+    async verifyOtp(): Promise<boolean> {
+        this.isBusy = true;
+        this.otpError = "";
+
+        try {
+            await this.auth.verifyOtp({
+                phoneNumber: this.phone,
+                countryCode: this.selectedCountry,
+                otp: this.otp.join(""),
+            });
+
+            this.step = "branch";
+            return true;
+        } catch (e) {
+            this.otpError = "login.invalidOtp";
+            return false;
+        } finally {
+            this.isBusy = false;
+        }
+    }
 
     startResendTimer() {
         this.resendRemaining = 30;

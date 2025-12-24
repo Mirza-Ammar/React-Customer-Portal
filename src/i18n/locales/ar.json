@@ -68,7 +68,8 @@
         "shipmentTracking": "تتبع الشحنات",
         "support": "الدعم",
         "settings": "الإعدادات",
-        "help": "مساعدة"
+        "help": "مساعدة",
+        "signOut": "تسجيل الخروج"
     },
     "address": {
         "title": "العناوين",

@@ -8,9 +8,11 @@ import {
     ChevronRight,
     Home,
     Truck,
+    LogOut,
 } from "lucide-react";
 import clsx from "clsx";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "@/hooks/useAuth";
 
 /** Base path for layout routes */
 const APP_BASE = "/app";
@@ -129,6 +131,8 @@ function SubMenuItem({
 export default function SideMenu() {
     const { t } = useTranslation();
     const { pathname } = useLocation();
+    const navigate = useNavigate();
+    const auth = useAuth();
 
     const poBoxExpanded =
         pathname.startsWith(`${APP_BASE}/po-box-details`) ||
@@ -146,6 +150,7 @@ export default function SideMenu() {
 
     return (
         <aside className="w-[268px] h-full bg-white rounded-[20px] shadow p-4 flex flex-col overflow-hidden">
+            {/* ================= MENU ================= */}
             <div className="flex-1 space-y-1 overflow-y-auto overflow-x-hidden">
 
                 <MenuItem
@@ -263,6 +268,32 @@ export default function SideMenu() {
                         route={`${APP_BASE}/help`}
                     />
                 </div>
+            </div>
+
+            {/* ================= SIGN OUT ================= */}
+            <div className="pt-3 border-t border-[var(--color-white-4)]">
+                <button
+                    onClick={() => {
+                        auth.logout();
+                        navigate("/login", { replace: true });
+                    }}
+                    className="
+                        flex items-center gap-3
+                        w-full h-[40px] px-4 rounded-[6px]
+                        text-sm font-semibold
+                        text-red-600
+                        hover:bg-red-50
+                        transition-colors
+                    "
+                >
+                    <span className="w-6 flex justify-center shrink-0">
+                        <LogOut size={18} />
+                    </span>
+
+                    <span className="truncate">
+                        {t("menu.signOut")}
+                    </span>
+                </button>
             </div>
         </aside>
     );

@@ -68,7 +68,8 @@
         "shipmentTracking": "Shipment Tracking",
         "support": "Support",
         "settings": "Settings",
-        "help": "Help"
+        "help": "Help",
+        "signOut": "Sign Out"
     },
     "address": {
         "title": "Address",

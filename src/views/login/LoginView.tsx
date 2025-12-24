@@ -168,18 +168,22 @@ export default function LoginView() {
                                 style={{ backgroundColor: colors.primary }}
                                 disabled={!vm.canGoNextFromPhone || vm.isBusy}
                                 onClick={async () => {
-                                    vm.isBusy = true;
-                                    rebuild();
-                                    await new Promise(r => setTimeout(r, 1000));
-                                    vm.goToBranchStep();
-                                    vm.isBusy = false;
-                                    rebuild();
+                                    rebuild();          // 🔑 allow loader to render
+                                    await vm.sendOtp();
+                                    rebuild();          // 🔁 update UI after completion
                                 }}
                             >
                                 {vm.isBusy
                                     ? <Loader size={18} color="#fff" />
                                     : t("login.sendCode")}
                             </Button>
+
+                            {vm.error && (
+                                <p className="mt-2 text-sm text-red-600">
+                                    {t(vm.error)}
+                                </p>
+                            )}
+
                         </>
                     )}
 
