@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
-import Header from "@/components/table/Header";
-import SideMenu from "@/components/table/SideMenu";
+import Header from "@/components/ui/Header";
+import SideMenu from "@/components/ui/SideMenu";
 import { useDirection } from "@/i18n/useDirection"; // 👈 ADD THIS
 import { useKeyboardShortcuts } from "@/accessibility/keyboardShortcuts";
 

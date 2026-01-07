@@ -13,3 +13,4 @@ export const shipmentTruck = "/assets/icons/shipment-truck.svg";
 export const secureShield = "/assets/icons/secure-shield.svg";
 export const clock = "/assets/icons/clock.svg";
 export const mailBox = "/assets/icons/mailBox.png";
+export const accountCircle = "/assets/icons/account_circle.svg";

@@ -1,603 +1,109 @@
 import type { AddressData } from "@/datamodels/AddressData";
+import { userAddress } from "@/hooks/userAddress";
+import { userAuth } from "@/hooks/userAuth";
+
+type AddressMode = "domestic" | "international";
 
 export class AddressesViewModel {
-    /* ================= STATE ================= */
+    /* ======================================================
+     * Dependencies
+     * ====================================================== */
+    private addressService = userAddress();
+    private auth = userAuth();
 
+    /* ======================================================
+     * State
+     * ====================================================== */
     search = "";
-    mode: "domestic" | "international" = "domestic";
+    mode: AddressMode = "domestic";
 
-    private all: AddressData[] = [];
+    page = 1;
+    pageSize = 10;
+
     items: AddressData[] = [];
     totalCount = 0;
 
-    page = 1;
-    pageSize = 10; // ✅ DEFAULT = 10
+    isLoading = false;
+    error?: string;
 
-    /* ================= INIT ================= */
+    /* ======================================================
+     * Internal State
+     * ====================================================== */
+    private all: AddressData[] = [];
+    private cache: Partial<Record<AddressMode, AddressData[]>> = {};
 
+    /* ======================================================
+     * Initialization
+     * ====================================================== */
     initialize() {
-        this.all = [
-            {
-                address: "6275+3CJ, Erbil, Erbil Governorate, Iraq",
-                phone: "9647507836447",
-                label: "Office",
-                note: "-",
-                inUse: false,
-            },
-            {
-                address: "4XMX+X78, 120 Meter St, Erbil, Iraq",
-                phone: "9647505451140",
-                label: "Apartment",
-                note: "Near mall",
-                inUse: true,
-            },
-            {
-                address: "Mumbai Rd, Erbil, Iraq",
-                phone: "9647700000000",
-                label: "Home",
-                note: "",
-                inUse: false,
-            },
-            {
-                address: "Dream City, Erbil, Iraq",
-                phone: "9647511111111",
-                label: "Villa",
-                note: "Gate 2",
-                inUse: false,
-            },
-            {
-                address: "Italian City, Erbil, Iraq",
-                phone: "9647522222222",
-                label: "Family House",
-                note: "",
-                inUse: true,
-            },
-            {
-                address: "Naz City, Erbil, Iraq",
-                phone: "9647533333333",
-                label: "Work",
-                note: "Building A",
-                inUse: false,
-            },
-            {
-                address: "Ankawa, Erbil, Iraq",
-                phone: "9647544444444",
-                label: "Friend",
-                note: "",
-                inUse: false,
-            },
-            {
-                address: "Bakhtiari, Erbil, Iraq",
-                phone: "9647555555555",
-                label: "Shop",
-                note: "Corner store",
-                inUse: true,
-            },
-            {
-                address: "Shorsh, Erbil, Iraq",
-                phone: "9647566666666",
-                label: "Warehouse",
-                note: "",
-                inUse: false,
-            },
-            {
-                address: "Zanko Village, Erbil, Iraq",
-                phone: "9647577777777",
-                label: "Dorm",
-                note: "Block C",
-                inUse: false,
-            },
-            {
-                address: "60 Meter St, Erbil, Iraq",
-                phone: "9647588888888",
-                label: "Office 2",
-                note: "",
-                inUse: true,
-            },
-            {
-                address: "100 Meter St, Erbil, Iraq",
-                phone: "9647599999999",
-                label: "Branch",
-                note: "2nd floor",
-                inUse: false,
-            },
-            {
-                address: "Runaki, Erbil, Iraq",
-                phone: "9647600000001",
-                label: "Relative",
-                note: "",
-                inUse: false,
-            },
-            {
-                address: "Azadi, Erbil, Iraq",
-                phone: "9647600000002",
-                label: "Old Home",
-                note: "",
-                inUse: false,
-            },
-            {
-                address: "Iskan, Erbil, Iraq",
-                phone: "9647600000003",
-                label: "Rental",
-                note: "Temporary",
-                inUse: true,
-            },
-            {
-                address: "Sami Abdulrahman Park, Erbil, Iraq",
-                phone: "9647600000004",
-                label: "Park Office",
-                note: "",
-                inUse: false,
-            },
-            {
-                address: "Airport Rd, Erbil, Iraq",
-                phone: "9647600000005",
-                label: "Logistics",
-                note: "",
-                inUse: false,
-            },
-            {
-                address: "Gulan St, Erbil, Iraq",
-                phone: "9647600000006",
-                label: "Studio",
-                note: "",
-                inUse: true,
-            },
-            {
-                address: "Mahabad, Erbil, Iraq",
-                phone: "9647600000007",
-                label: "Secondary Home",
-                note: "",
-                inUse: false,
-            },
-            {
-                address: "Shaqlawa Rd, Erbil, Iraq",
-                phone: "9647600000008",
-                label: "Farm",
-                note: "Outside city",
-                inUse: false,
-            },
-            {
-                address: "6275+3CJ, Erbil, Erbil Governorate, Iraq",
-                phone: "9647507836447",
-                label: "Office",
-                note: "-",
-                inUse: false,
-            },
-            {
-                address: "4XMX+X78, 120 Meter St, Erbil, Iraq",
-                phone: "9647505451140",
-                label: "Apartment",
-                note: "Near mall",
-                inUse: true,
-            },
-            {
-                address: "Mumbai Rd, Erbil, Iraq",
-                phone: "9647700000000",
-                label: "Home",
-                note: "",
-                inUse: false,
-            },
-            {
-                address: "Dream City, Erbil, Iraq",
-                phone: "9647511111111",
-                label: "Villa",
-                note: "Gate 2",
-                inUse: false,
-            },
-            {
-                address: "Italian City, Erbil, Iraq",
-                phone: "9647522222222",
-                label: "Family House",
-                note: "",
-                inUse: true,
-            },
-            {
-                address: "Naz City, Erbil, Iraq",
-                phone: "9647533333333",
-                label: "Work",
-                note: "Building A",
-                inUse: false,
-            },
-            {
-                address: "Ankawa, Erbil, Iraq",
-                phone: "9647544444444",
-                label: "Friend",
-                note: "",
-                inUse: false,
-            },
-            {
-                address: "Bakhtiari, Erbil, Iraq",
-                phone: "9647555555555",
-                label: "Shop",
-                note: "Corner store",
-                inUse: true,
-            },
-            {
-                address: "Shorsh, Erbil, Iraq",
-                phone: "9647566666666",
-                label: "Warehouse",
-                note: "",
-                inUse: false,
-            },
-            {
-                address: "Zanko Village, Erbil, Iraq",
-                phone: "9647577777777",
-                label: "Dorm",
-                note: "Block C",
-                inUse: false,
-            },
-            {
-                address: "60 Meter St, Erbil, Iraq",
-                phone: "9647588888888",
-                label: "Office 2",
-                note: "",
-                inUse: true,
-            },
-            {
-                address: "100 Meter St, Erbil, Iraq",
-                phone: "9647599999999",
-                label: "Branch",
-                note: "2nd floor",
-                inUse: false,
-            },
-            {
-                address: "Runaki, Erbil, Iraq",
-                phone: "9647600000001",
-                label: "Relative",
-                note: "",
-                inUse: false,
-            },
-            {
-                address: "Azadi, Erbil, Iraq",
-                phone: "9647600000002",
-                label: "Old Home",
-                note: "",
-                inUse: false,
-            },
-            {
-                address: "Iskan, Erbil, Iraq",
-                phone: "9647600000003",
-                label: "Rental",
-                note: "Temporary",
-                inUse: true,
-            },
-            {
-                address: "Sami Abdulrahman Park, Erbil, Iraq",
-                phone: "9647600000004",
-                label: "Park Office",
-                note: "",
-                inUse: false,
-            },
-            {
-                address: "Airport Rd, Erbil, Iraq",
-                phone: "9647600000005",
-                label: "Logistics",
-                note: "",
-                inUse: false,
-            },
-            {
-                address: "Gulan St, Erbil, Iraq",
-                phone: "9647600000006",
-                label: "Studio",
-                note: "",
-                inUse: true,
-            },
-            {
-                address: "Mahabad, Erbil, Iraq",
-                phone: "9647600000007",
-                label: "Secondary Home",
-                note: "",
-                inUse: false,
-            },
-            {
-                address: "Shaqlawa Rd, Erbil, Iraq",
-                phone: "9647600000008",
-                label: "Farm",
-                note: "Outside city",
-                inUse: false,
-            },
-            {
-                address: "6275+3CJ, Erbil, Erbil Governorate, Iraq",
-                phone: "9647507836447",
-                label: "Office",
-                note: "-",
-                inUse: false,
-            },
-            {
-                address: "4XMX+X78, 120 Meter St, Erbil, Iraq",
-                phone: "9647505451140",
-                label: "Apartment",
-                note: "Near mall",
-                inUse: true,
-            },
-            {
-                address: "Mumbai Rd, Erbil, Iraq",
-                phone: "9647700000000",
-                label: "Home",
-                note: "",
-                inUse: false,
-            },
-            {
-                address: "Dream City, Erbil, Iraq",
-                phone: "9647511111111",
-                label: "Villa",
-                note: "Gate 2",
-                inUse: false,
-            },
-            {
-                address: "Italian City, Erbil, Iraq",
-                phone: "9647522222222",
-                label: "Family House",
-                note: "",
-                inUse: true,
-            },
-            {
-                address: "Naz City, Erbil, Iraq",
-                phone: "9647533333333",
-                label: "Work",
-                note: "Building A",
-                inUse: false,
-            },
-            {
-                address: "Ankawa, Erbil, Iraq",
-                phone: "9647544444444",
-                label: "Friend",
-                note: "",
-                inUse: false,
-            },
-            {
-                address: "Bakhtiari, Erbil, Iraq",
-                phone: "9647555555555",
-                label: "Shop",
-                note: "Corner store",
-                inUse: true,
-            },
-            {
-                address: "Shorsh, Erbil, Iraq",
-                phone: "9647566666666",
-                label: "Warehouse",
-                note: "",
-                inUse: false,
-            },
-            {
-                address: "Zanko Village, Erbil, Iraq",
-                phone: "9647577777777",
-                label: "Dorm",
-                note: "Block C",
-                inUse: false,
-            },
-            {
-                address: "60 Meter St, Erbil, Iraq",
-                phone: "9647588888888",
-                label: "Office 2",
-                note: "",
-                inUse: true,
-            },
-            {
-                address: "100 Meter St, Erbil, Iraq",
-                phone: "9647599999999",
-                label: "Branch",
-                note: "2nd floor",
-                inUse: false,
-            },
-            {
-                address: "Runaki, Erbil, Iraq",
-                phone: "9647600000001",
-                label: "Relative",
-                note: "",
-                inUse: false,
-            },
-            {
-                address: "Azadi, Erbil, Iraq",
-                phone: "9647600000002",
-                label: "Old Home",
-                note: "",
-                inUse: false,
-            },
-            {
-                address: "Iskan, Erbil, Iraq",
-                phone: "9647600000003",
-                label: "Rental",
-                note: "Temporary",
-                inUse: true,
-            },
-            {
-                address: "Sami Abdulrahman Park, Erbil, Iraq",
-                phone: "9647600000004",
-                label: "Park Office",
-                note: "",
-                inUse: false,
-            },
-            {
-                address: "Airport Rd, Erbil, Iraq",
-                phone: "9647600000005",
-                label: "Logistics",
-                note: "",
-                inUse: false,
-            },
-            {
-                address: "Gulan St, Erbil, Iraq",
-                phone: "9647600000006",
-                label: "Studio",
-                note: "",
-                inUse: true,
-            },
-            {
-                address: "Mahabad, Erbil, Iraq",
-                phone: "9647600000007",
-                label: "Secondary Home",
-                note: "",
-                inUse: false,
-            },
-            {
-                address: "Shaqlawa Rd, Erbil, Iraq",
-                phone: "9647600000008",
-                label: "Farm",
-                note: "Outside city",
-                inUse: false,
-            },
-            {
-                address: "6275+3CJ, Erbil, Erbil Governorate, Iraq",
-                phone: "9647507836447",
-                label: "Office",
-                note: "-",
-                inUse: false,
-            },
-            {
-                address: "4XMX+X78, 120 Meter St, Erbil, Iraq",
-                phone: "9647505451140",
-                label: "Apartment",
-                note: "Near mall",
-                inUse: true,
-            },
-            {
-                address: "Mumbai Rd, Erbil, Iraq",
-                phone: "9647700000000",
-                label: "Home",
-                note: "",
-                inUse: false,
-            },
-            {
-                address: "Dream City, Erbil, Iraq",
-                phone: "9647511111111",
-                label: "Villa",
-                note: "Gate 2",
-                inUse: false,
-            },
-            {
-                address: "Italian City, Erbil, Iraq",
-                phone: "9647522222222",
-                label: "Family House",
-                note: "",
-                inUse: true,
-            },
-            {
-                address: "Naz City, Erbil, Iraq",
-                phone: "9647533333333",
-                label: "Work",
-                note: "Building A",
-                inUse: false,
-            },
-            {
-                address: "Ankawa, Erbil, Iraq",
-                phone: "9647544444444",
-                label: "Friend",
-                note: "",
-                inUse: false,
-            },
-            {
-                address: "Bakhtiari, Erbil, Iraq",
-                phone: "9647555555555",
-                label: "Shop",
-                note: "Corner store",
-                inUse: true,
-            },
-            {
-                address: "Shorsh, Erbil, Iraq",
-                phone: "9647566666666",
-                label: "Warehouse",
-                note: "",
-                inUse: false,
-            },
-            {
-                address: "Zanko Village, Erbil, Iraq",
-                phone: "9647577777777",
-                label: "Dorm",
-                note: "Block C",
-                inUse: false,
-            },
-            {
-                address: "60 Meter St, Erbil, Iraq",
-                phone: "9647588888888",
-                label: "Office 2",
-                note: "",
-                inUse: true,
-            },
-            {
-                address: "100 Meter St, Erbil, Iraq",
-                phone: "9647599999999",
-                label: "Branch",
-                note: "2nd floor",
-                inUse: false,
-            },
-            {
-                address: "Runaki, Erbil, Iraq",
-                phone: "9647600000001",
-                label: "Relative",
-                note: "",
-                inUse: false,
-            },
-            {
-                address: "Azadi, Erbil, Iraq",
-                phone: "9647600000002",
-                label: "Old Home",
-                note: "",
-                inUse: false,
-            },
-            {
-                address: "Iskan, Erbil, Iraq",
-                phone: "9647600000003",
-                label: "Rental",
-                note: "Temporary",
-                inUse: true,
-            },
-            {
-                address: "Sami Abdulrahman Park, Erbil, Iraq",
-                phone: "9647600000004",
-                label: "Park Office",
-                note: "",
-                inUse: false,
-            },
-            {
-                address: "Airport Rd, Erbil, Iraq",
-                phone: "9647600000005",
-                label: "Logistics",
-                note: "",
-                inUse: false,
-            },
-            {
-                address: "Gulan St, Erbil, Iraq",
-                phone: "9647600000006",
-                label: "Studio",
-                note: "",
-                inUse: true,
-            },
-            {
-                address: "Mahabad, Erbil, Iraq",
-                phone: "9647600000007",
-                label: "Secondary Home",
-                note: "",
-                inUse: false,
-            },
-            {
-                address: "Shaqlawa Rd, Erbil, Iraq",
-                phone: "9647600000008",
-                label: "Farm",
-                note: "Outside city",
-                inUse: false,
-            },
-        ]
+        this.isLoading = true;
+        this.items = [];
+        this.totalCount = 0;
 
-
-        this.applyFilters();
+        return this.loadForMode(this.mode);
     }
 
-    /* ================= FILTERS ================= */
+    /* ======================================================
+     * Data Loading
+     * ====================================================== */
+    private async loadForMode(mode: AddressMode) {
+        const cached = this.cache[mode];
 
+        if (cached) {
+            this.all = cached;
+            this.page = 1;
+            this.applyFilters();
+            this.isLoading = false;
+            return;
+        }
+
+        const user = this.auth.getCurrentUser();
+        if (!user) {
+            this.error = "User not authenticated";
+            this.isLoading = false;
+            return;
+        }
+
+        try {
+            const addresses = await this.addressService.getAddresses({
+                supabaseAccessToken: user.supabaseAccessToken,
+                mode,
+            });
+
+            const filtered = addresses.filter((a) =>
+                mode === "domestic"
+                    ? a.addressType === "Domestic"
+                    : a.addressType === "International"
+            );
+
+            this.cache[mode] = filtered;
+            this.all = filtered;
+            this.page = 1;
+            this.applyFilters();
+        } catch (e) {
+            console.error(e);
+            this.all = [];
+            this.items = [];
+            this.totalCount = 0;
+            this.error = "Failed to load addresses";
+        } finally {
+            this.isLoading = false;
+        }
+    }
+
+    /* ======================================================
+     * Filtering & Pagination
+     * ====================================================== */
     private applyFilters() {
         const q = this.search.trim().toLowerCase();
 
-        const filtered = this.all.filter((a) => {
-            const matchQuery =
+        const filtered = this.all.filter(
+            (a) =>
                 !q ||
                 a.address.toLowerCase().includes(q) ||
                 a.label?.toLowerCase().includes(q) ||
-                a.phone?.toLowerCase().includes(q);
-
-            const matchMode = this.mode === "domestic";
-            return matchQuery && matchMode;
-        });
+                a.phone?.toLowerCase().includes(q)
+        );
 
         this.totalCount = filtered.length;
 
@@ -605,18 +111,28 @@ export class AddressesViewModel {
         this.items = filtered.slice(start, start + this.pageSize);
     }
 
-    /* ================= ACTIONS ================= */
-
+    /* ======================================================
+     * Actions
+     * ====================================================== */
     onSearchChanged(value: string) {
         this.search = value;
         this.page = 1;
         this.applyFilters();
     }
 
-    setMode(mode: "domestic" | "international") {
+    async setMode(mode: AddressMode) {
+        if (this.mode === mode) return;
+
         this.mode = mode;
         this.page = 1;
-        this.applyFilters();
+
+        if (!this.cache[mode]) {
+            this.isLoading = true;
+            this.items = [];
+            this.totalCount = 0;
+        }
+
+        await this.loadForMode(mode);
     }
 
     setPage(page: number) {
@@ -631,7 +147,7 @@ export class AddressesViewModel {
     }
 
     nextPage() {
-        const maxPage = Math.max(1, Math.ceil(this.totalCount / this.pageSize));
+        const maxPage = Math.ceil(this.totalCount / this.pageSize);
         if (this.page < maxPage) {
             this.page++;
             this.applyFilters();
@@ -645,7 +161,18 @@ export class AddressesViewModel {
         }
     }
 
+    /* ======================================================
+     * UI Helpers
+     * ====================================================== */
+    get isEmpty() {
+        return !this.isLoading && this.totalCount === 0;
+    }
+
+    get isTableLoading() {
+        return this.isLoading && this.items.length === 0;
+    }
+
     onAddNew() {
-        console.log("Add new address");
+        console.log("[AddressVM] Add new address");
     }
 }

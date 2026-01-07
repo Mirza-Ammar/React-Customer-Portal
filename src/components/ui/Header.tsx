@@ -1,10 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { logoKurdishSvg, logoYellowSvg } from "@/lib/assets";
+import { accountCircle, logoKurdishSvg, logoYellowSvg } from "@/lib/assets";
 import { Bell, Globe, Search, ChevronDown } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { LANGUAGES } from "@/i18n/languages";
 import { GLOBAL_SEARCH_ITEMS } from "@/accessibility/GlobalSearch";
+import { userProfileApi } from "@/hooks/userProfile";
+import type { UserData } from "@/datamodels/UserData";
 
 /* ================= TEXT HIGHLIGHT ================= */
 function highlightMatch(text: string, query: string) {
@@ -35,6 +37,16 @@ export default function Header() {
     const [query, setQuery] = useState("");
     const [searchOpen, setSearchOpen] = useState(false);
     const [activeIndex, setActiveIndex] = useState(-1);
+
+    /* ================= USER ================= */
+    const [user, setUser] = useState<UserData | null>(null);
+
+    useEffect(() => {
+        userProfileApi()
+            .loadProfile()
+            .then(setUser)
+            .catch(e => console.error("[Header] profile load failed", e));
+    }, []);
 
     /* ================= LANGUAGE ================= */
     const [selectedLang, setSelectedLang] = useState(() => {
@@ -149,7 +161,7 @@ export default function Header() {
                     <div className="h-5 w-px bg-[var(--color-dark-5)]" />
 
                     <span className="text-sm font-medium text-[var(--color-dark-1)]">
-                        {t("header.individual")}
+                        {user?.userType || t("header.individual")}
                     </span>
                 </div>
 
@@ -195,13 +207,34 @@ export default function Header() {
 
                     {/* USER */}
                     <button className="flex items-center gap-2 px-2 py-1 rounded-md hover:bg-[var(--color-white-4)]">
-                        <div className="h-7 w-7 rounded-full bg-[var(--color-white-4)]" />
-                        <div className="text-xs text-left">
-                            <div className="font-semibold">Mohammad Iqma</div>
-                            <div className="text-[10px]">+9647654321234</div>
+                        <div className="h-7 w-7 rounded-full overflow-hidden bg-[var(--color-white-4)] flex items-center justify-center">
+                            {user?.profileImage ? (
+                                <img
+                                    src={user.profileImage}
+                                    alt="User avatar"
+                                    className="h-full w-full object-cover"
+                                />
+                            ) : (
+                                <img
+                                    src={accountCircle}
+                                    alt="Default avatar"
+                                    className="h-full w-full opacity-70"
+                                />
+                            )}
                         </div>
+
+                        <div className="text-xs text-left">
+                            <div className="font-semibold">
+                                {user?.role || "Customer"}
+                            </div>
+                            <div className="text-[10px]">
+                                {user ? `${user.countryCode}${user.phoneNumber}` : ""}
+                            </div>
+                        </div>
+
                         <ChevronDown size={14} className="opacity-70" />
                     </button>
+
                 </div>
 
                 {/* ================= SEARCH ================= */}
@@ -212,7 +245,6 @@ export default function Header() {
                     <div className="h-[35px] rounded-full bg-[var(--color-white-6)] border border-black/15 flex items-center px-4 relative overflow-hidden">
                         <Search size={16} />
 
-                        {/* Animated placeholder */}
                         {!query && (
                             <span
                                 key={placeholderIndex}
@@ -228,7 +260,6 @@ export default function Header() {
                             </span>
                         )}
 
-                        {/* Input */}
                         <input
                             value={query}
                             onChange={(e) => {

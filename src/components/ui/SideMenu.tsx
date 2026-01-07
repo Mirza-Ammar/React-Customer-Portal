@@ -14,6 +14,7 @@ import {
 import clsx from "clsx";
 import { useTranslation } from "react-i18next";
 import { userAuth } from "@/hooks/userAuth";
+import { clearHomeCache } from "@/hooks/userHome";
 
 const APP_BASE = "/app";
 
@@ -348,6 +349,7 @@ export default function SideMenu() {
                 <button
                     title={collapsed ? t("menu.signOut") : undefined}
                     onClick={() => {
+                        clearHomeCache();
                         auth.logout();
                         navigate("/login", { replace: true });
                     }}
