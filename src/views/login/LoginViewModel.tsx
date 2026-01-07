@@ -1,35 +1,42 @@
-import { useAuth } from "@/hooks/useAuth";
+import type { Branch } from "@/datamodels/BranchData";
+import { userAuth } from "@/hooks/userAuth";
 
 export type LoginStep = "phone" | "otp" | "branch";
 
 export class LoginViewModel {
-    private auth = useAuth();
+    private auth = userAuth();
 
+    /* ================================
+     * UI State
+     * ================================ */
     step: LoginStep = "phone";
     isBusy = false;
-
-    phone = "";
-    countryCodes = ["+964", "+1", "+44", "+971", "+92"];
-    selectedCountry = "+964";
-
-    branches = ["Test Branch", "Main Branch", "Other Branch"];
-    selectedBranch: string | null = "Test Branch";
-
-    otp: string[] = Array(6).fill("");
-    resendRemaining = 0;
 
     error = "";
     otpError = "";
 
-    validatePhone() {
-        if (!this.phone || this.phone.length < 8) {
-            this.error = "login.invalidPhone";
-            return false;
-        }
-        this.error = "";
-        return true;
-    }
+    /* ================================
+     * Phone
+     * ================================ */
+    phone = "";
+    selectedCountry = "+964";
+    countryCodes = ["+964", "+1", "+44", "+971", "+92", "+91", "+90"];
 
+    /* ================================
+     * OTP
+     * ================================ */
+    otp: string[] = Array(6).fill("");
+    resendRemaining = 0;
+
+    /* ================================
+     * Branch
+     * ================================ */
+    branches: Branch[] = [];
+    selectedBranch: Branch | null = null;
+
+    /* ================================
+     * Derived state
+     * ================================ */
     get canGoNextFromPhone() {
         return this.phone.length >= 10 && !this.isBusy;
     }
@@ -38,14 +45,31 @@ export class LoginViewModel {
         return this.otp.join("").length === 6;
     }
 
-    async sendOtp() {
+    /* ================================
+     * Validation
+     * ================================ */
+    validatePhone(): boolean {
+        if (!this.phone || this.phone.length < 8) {
+            this.error = "login.invalidPhone";
+            return false;
+        }
+
+        this.error = "";
+        return true;
+    }
+
+    /* ================================
+     * Actions
+     * ================================ */
+    async sendOtp(): Promise<void> {
         if (!this.validatePhone()) return;
 
         this.isBusy = true;
         this.error = "";
 
         try {
-            const cleanPhone = this.phone.replace(/\D/g, ""); // ✅ digits only
+            // backend expects digits-only phone
+            const cleanPhone = this.phone.replace(/\D/g, "");
 
             await this.auth.sendOtp({
                 phoneNumber: cleanPhone,
@@ -53,9 +77,10 @@ export class LoginViewModel {
                 sendSms: false,
             });
 
-            this.phone = cleanPhone; // keep normalized value
+            this.phone = cleanPhone;
             this.step = "otp";
             this.startResendTimer();
+
         } catch (e: any) {
             console.error(e);
             this.error = e.message || "Failed to send OTP";
@@ -64,21 +89,36 @@ export class LoginViewModel {
         }
     }
 
-
     async verifyOtp(): Promise<boolean> {
         this.isBusy = true;
         this.otpError = "";
 
         try {
-            await this.auth.verifyOtp({
+            const user = await this.auth.verifyOtp({
                 phoneNumber: this.phone,
                 countryCode: this.selectedCountry,
                 otp: this.otp.join(""),
             });
 
+            const onboarding = await this.auth.onboardingCheck(
+                user.supabaseAccessToken
+            );
+
+            if (onboarding.hasBranch) {
+                return true;
+            }
+
+            // user must select a branch
+            this.branches = await this.auth.getBranches(
+                user.supabaseAccessToken
+            );
+
+            this.selectedBranch = null;
             this.step = "branch";
-            return true;
+            return false;
+
         } catch (e) {
+            console.error(e);
             this.otpError = "login.invalidOtp";
             return false;
         } finally {
@@ -86,15 +126,43 @@ export class LoginViewModel {
         }
     }
 
-    startResendTimer() {
+    async setBranch(): Promise<boolean> {
+        if (!this.selectedBranch) return false;
+
+        this.isBusy = true;
+
+        try {
+            const user = this.auth.getCurrentUser();
+            if (!user) throw new Error("User session not found");
+
+            await this.auth.setBranch(
+                user.supabaseAccessToken,
+                this.selectedBranch.id
+            );
+
+            return true;
+
+        } catch (e) {
+            console.error(e);
+            return false;
+        } finally {
+            this.isBusy = false;
+        }
+    }
+
+    /* ================================
+     * Helpers
+     * ================================ */
+    startResendTimer(): void {
         this.resendRemaining = 30;
+
         const timer = setInterval(() => {
             this.resendRemaining--;
             if (this.resendRemaining <= 0) clearInterval(timer);
         }, 1000);
     }
 
-    resetOtp() {
+    resetOtp(): void {
         this.step = "phone";
         this.otp = Array(6).fill("");
         this.otpError = "";

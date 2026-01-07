@@ -4,7 +4,7 @@ import { logoKurdishSvg, logoYellowSvg } from "@/lib/assets";
 import { Bell, Globe, Search, ChevronDown } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { LANGUAGES } from "@/i18n/languages";
-import { GLOBAL_SEARCH_ITEMS } from "@/search/GlobalSearch";
+import { GLOBAL_SEARCH_ITEMS } from "@/accessibility/GlobalSearch";
 
 /* ================= TEXT HIGHLIGHT ================= */
 function highlightMatch(text: string, query: string) {
@@ -264,8 +264,8 @@ export default function Header() {
                                         setActiveIndex(-1);
                                     }}
                                     className={`w-full text-left px-4 py-2 text-sm ${index === activeIndex
-                                            ? "bg-[var(--color-secondary)]"
-                                            : "hover:bg-[var(--color-white-4)]"
+                                        ? "bg-[var(--color-secondary)]"
+                                        : "hover:bg-[var(--color-white-4)]"
                                         }`}
                                 >
                                     {highlightMatch(t(item.labelKey), query)}

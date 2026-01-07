@@ -7,15 +7,20 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "dev:staging": "vite --mode staging",
+    "build:staging": "vite build --mode staging",
+    "build:prod": "vite build --mode production"
   },
   "dependencies": {
     "@radix-ui/react-select": "^2.2.6",
     "@radix-ui/react-separator": "^1.1.8",
     "@radix-ui/react-slot": "^1.2.4",
+    "@supabase/supabase-js": "^2.89.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "i18next": "^25.7.3",
+    "jwt-decode": "^4.0.0",
     "lucide-react": "^0.561.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",

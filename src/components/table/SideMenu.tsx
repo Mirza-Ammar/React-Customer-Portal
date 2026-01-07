@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import clsx from "clsx";
 import { useTranslation } from "react-i18next";
-import { useAuth } from "@/hooks/useAuth";
+import { userAuth } from "@/hooks/userAuth";
 
 const APP_BASE = "/app";
 
@@ -157,7 +157,7 @@ export default function SideMenu() {
     const { t } = useTranslation();
     const { pathname } = useLocation();
     const navigate = useNavigate();
-    const auth = useAuth();
+    const auth = userAuth();
 
     const [collapsed, setCollapsed] = useState(false);
 

@@ -1,8 +1,8 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useAuth } from "@/hooks/useAuth";
+import { userAuth } from "@/hooks/userAuth";
 
 export default function GuestOnly() {
-    const auth = useAuth();
+    const auth = userAuth();
     const user = auth.getCurrentUser();
 
     // ✅ Already logged in → go to dashboard

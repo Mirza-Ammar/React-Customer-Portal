@@ -1,8 +1,8 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useAuth } from "@/hooks/useAuth";
+import { userAuth } from "@/hooks/userAuth";
 
 export default function RequireAuth() {
-    const auth = useAuth();
+    const auth = userAuth();
     const user = auth.getCurrentUser();
 
     // ❌ Not logged in → go to login

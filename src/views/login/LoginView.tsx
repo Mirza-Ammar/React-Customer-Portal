@@ -1,7 +1,11 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+
+// ViewModel
 import { LoginViewModel } from "./LoginViewModel";
+
+// Styles
 import "./login.css";
 
 // shadcn/ui
@@ -15,7 +19,10 @@ import {
     SelectItem,
 } from "@/components/ui/select";
 
-// assets & theme
+// UI utilities
+import { Loader } from "@/components/ui/loader/Loader";
+
+// Assets & theme
 import {
     logoYellowSvg,
     logoKurdishSvg,
@@ -26,29 +33,48 @@ import {
 } from "@/lib/assets";
 import { colors } from "@/theme/colors";
 
-import { Loader } from "@/components/ui/loader/Loader";
-
-// language
+// Language
 import { Globe, ChevronDown } from "lucide-react";
 import { LANGUAGES } from "@/i18n/languages";
 
 export default function LoginView() {
+    /* ======================================================
+     * ViewModel (manual re-render pattern)
+     * ====================================================== */
     const [vm] = useState(() => new LoginViewModel());
+
+    // Used to force React to re-render when ViewModel changes
     const [, forceUpdate] = useState(0);
     const rebuild = () => forceUpdate(v => v + 1);
 
+    /* ======================================================
+     * Navigation & refs
+     * ====================================================== */
     const navigate = useNavigate();
     const otpRefs = useRef<(HTMLInputElement | null)[]>([]);
-
-    const { i18n, t } = useTranslation();
     const langRef = useRef<HTMLDivElement>(null);
+
+    /* ======================================================
+     * i18n & language state
+     * ====================================================== */
+    const { i18n, t } = useTranslation();
+
     const [langOpen, setLangOpen] = useState(false);
 
+    // Initialize language from localStorage (fallback to first language)
     const [selectedLang, setSelectedLang] = useState(() => {
         const saved = localStorage.getItem("lang");
         return LANGUAGES.find(l => l.i18n === saved) || LANGUAGES[0];
     });
 
+    const isRTL = selectedLang.rtl;
+    const logoSrc = isRTL ? logoKurdishSvg : logoYellowSvg;
+
+    /* ======================================================
+     * Effects
+     * ====================================================== */
+
+    // Apply language + direction changes globally
     useEffect(() => {
         i18n.changeLanguage(selectedLang.i18n);
         document.documentElement.dir = selectedLang.rtl ? "rtl" : "ltr";
@@ -56,37 +82,43 @@ export default function LoginView() {
         localStorage.setItem("lang", selectedLang.i18n);
     }, [selectedLang, i18n]);
 
-    const isRTL = selectedLang.rtl;
-    const logoSrc = isRTL ? logoKurdishSvg : logoYellowSvg;
-
-
+    // Close language dropdown when clicking outside
     useEffect(() => {
-        function handleOutside(e: MouseEvent) {
+        function handleOutsideClick(e: MouseEvent) {
             if (langRef.current && !langRef.current.contains(e.target as Node)) {
                 setLangOpen(false);
             }
         }
-        document.addEventListener("mousedown", handleOutside);
-        return () => document.removeEventListener("mousedown", handleOutside);
+
+        document.addEventListener("mousedown", handleOutsideClick);
+        return () => document.removeEventListener("mousedown", handleOutsideClick);
     }, []);
 
+    // Auto-focus first OTP input when entering OTP step
     useEffect(() => {
         if (vm.step === "otp") {
             setTimeout(() => otpRefs.current[0]?.focus(), 50);
         }
     }, [vm.step]);
 
+    // Re-render every second during OTP step (timer / resend UX)
     useEffect(() => {
         if (vm.step !== "otp") return;
+
         const interval = setInterval(rebuild, 1000);
         return () => clearInterval(interval);
     }, [vm.step]);
 
+    /* ======================================================
+     * Render
+     * ====================================================== */
     return (
         <div className="login-root">
-            {/* LEFT PANEL */}
+            {/* ======================================================
+             * LEFT PANEL (Form)
+             * ====================================================== */}
             <div className="left-panel relative">
-                {/* LANGUAGE */}
+                {/* Language selector */}
                 <div className="absolute top-4 right-4 z-50" ref={langRef}>
                     <button
                         onClick={() => setLangOpen(v => !v)}
@@ -116,8 +148,13 @@ export default function LoginView() {
                 </div>
 
                 <div className="form-container form-left">
+                    {/* Logo */}
                     <div className="logo-wrapper">
-                        <img src={logoSrc} className="logo" alt={t("login.companyLogoAlt")} />
+                        <img
+                            src={logoSrc}
+                            className="logo"
+                            alt={t("login.companyLogoAlt")}
+                        />
                     </div>
 
                     <h2 className="text-2xl font-semibold text-gray-900">
@@ -127,6 +164,7 @@ export default function LoginView() {
                         {t("login.subtitle")}
                     </p>
 
+                    {/* ================= PHONE STEP ================= */}
                     {vm.step === "phone" && (
                         <>
                             <label className="form-label">
@@ -136,7 +174,7 @@ export default function LoginView() {
                             <div className="phone-row">
                                 <Select
                                     value={vm.selectedCountry}
-                                    onValueChange={(v) => {
+                                    onValueChange={v => {
                                         vm.selectedCountry = v;
                                         rebuild();
                                     }}
@@ -145,9 +183,9 @@ export default function LoginView() {
                                         <SelectValue />
                                     </SelectTrigger>
                                     <SelectContent>
-                                        {vm.countryCodes.map(c => (
-                                            <SelectItem key={c} value={c}>
-                                                {c}
+                                        {vm.countryCodes.map(code => (
+                                            <SelectItem key={code} value={code}>
+                                                {code}
                                             </SelectItem>
                                         ))}
                                     </SelectContent>
@@ -156,7 +194,7 @@ export default function LoginView() {
                                 <Input
                                     value={vm.phone}
                                     placeholder={t("login.phonePlaceholder")}
-                                    onChange={(e) => {
+                                    onChange={e => {
                                         vm.phone = e.target.value;
                                         rebuild();
                                     }}
@@ -168,9 +206,9 @@ export default function LoginView() {
                                 style={{ backgroundColor: colors.primary }}
                                 disabled={!vm.canGoNextFromPhone || vm.isBusy}
                                 onClick={async () => {
-                                    rebuild();          // 🔑 allow loader to render
+                                    rebuild(); // allow loader to render
                                     await vm.sendOtp();
-                                    rebuild();          // 🔁 update UI after completion
+                                    rebuild();
                                 }}
                             >
                                 {vm.isBusy
@@ -183,10 +221,10 @@ export default function LoginView() {
                                     {t(vm.error)}
                                 </p>
                             )}
-
                         </>
                     )}
 
+                    {/* ================= OTP STEP ================= */}
                     {vm.step === "otp" && (
                         <>
                             <span className="form-label">
@@ -204,17 +242,25 @@ export default function LoginView() {
                                         maxLength={1}
                                         value={vm.otp[i]}
                                         className="w-[44px] h-[48px] text-center text-lg"
-                                        onChange={(e) => {
-                                            const v = e.target.value.replace(/\D/g, "").slice(-1);
-                                            vm.otp[i] = v;
-                                            vm.otpError = ""; // ✅ clear error while typing
+                                        onChange={e => {
+                                            const value = e.target.value
+                                                .replace(/\D/g, "")
+                                                .slice(-1);
+
+                                            vm.otp[i] = value;
+                                            vm.otpError = ""; // clear error while typing
                                             rebuild();
-                                            if (v && i < 5) {
+
+                                            if (value && i < 5) {
                                                 otpRefs.current[i + 1]?.focus();
                                             }
                                         }}
-                                        onKeyDown={(e) => {
-                                            if (e.key === "Backspace" && !vm.otp[i] && i > 0) {
+                                        onKeyDown={e => {
+                                            if (
+                                                e.key === "Backspace" &&
+                                                !vm.otp[i] &&
+                                                i > 0
+                                            ) {
                                                 otpRefs.current[i - 1]?.focus();
                                             }
                                         }}
@@ -228,15 +274,18 @@ export default function LoginView() {
                                 </p>
                             )}
 
-
                             <Button
                                 className="w-full mt-5 text-white"
                                 style={{ backgroundColor: colors.primary }}
                                 disabled={!vm.isOtpComplete || vm.isBusy}
                                 onClick={async () => {
                                     rebuild();
-                                    await vm.verifyOtp();
+                                    const success = await vm.verifyOtp();
                                     rebuild();
+
+                                    if (success) {
+                                        navigate("/app", { replace: true });
+                                    }
                                 }}
                             >
                                 {vm.isBusy
@@ -246,7 +295,7 @@ export default function LoginView() {
                         </>
                     )}
 
-
+                    {/* ================= BRANCH STEP ================= */}
                     {vm.step === "branch" && (
                         <>
                             <label className="form-label">
@@ -254,9 +303,15 @@ export default function LoginView() {
                             </label>
 
                             <Select
-                                value={vm.selectedBranch ?? ""}
-                                onValueChange={(v) => {
-                                    vm.selectedBranch = v;
+                                value={
+                                    vm.selectedBranch
+                                        ? String(vm.selectedBranch.id)
+                                        : ""
+                                }
+                                onValueChange={value => {
+                                    const branchId = Number(value);
+                                    vm.selectedBranch =
+                                        vm.branches.find(b => b.id === branchId) || null;
                                     rebuild();
                                 }}
                             >
@@ -264,9 +319,12 @@ export default function LoginView() {
                                     <SelectValue placeholder={t("login.branchPlaceholder")} />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    {vm.branches.map(b => (
-                                        <SelectItem key={b} value={b}>
-                                            {b}
+                                    {vm.branches.map(branch => (
+                                        <SelectItem
+                                            key={branch.id}
+                                            value={String(branch.id)}
+                                        >
+                                            {branch.name}
                                         </SelectItem>
                                     ))}
                                 </SelectContent>
@@ -277,10 +335,13 @@ export default function LoginView() {
                                 style={{ backgroundColor: colors.primary }}
                                 disabled={!vm.selectedBranch || vm.isBusy}
                                 onClick={async () => {
-                                    vm.isBusy = true;
                                     rebuild();
-                                    await new Promise(r => setTimeout(r, 1000));
-                                    navigate("/app", { replace: true });
+                                    const success = await vm.setBranch();
+                                    rebuild();
+
+                                    if (success) {
+                                        navigate("/app", { replace: true });
+                                    }
                                 }}
                             >
                                 {vm.isBusy
@@ -292,7 +353,9 @@ export default function LoginView() {
                 </div>
             </div>
 
-            {/* RIGHT PANEL */}
+            {/* ======================================================
+             * RIGHT PANEL (Marketing / Info)
+             * ====================================================== */}
             <div className="right-panel">
                 <div className="right-panel-center">
                     <div className="right-panel-content">
@@ -313,9 +376,7 @@ export default function LoginView() {
 
                             <div className="right-panel-divider" />
 
-                            <p>
-                                {t("login.heroDescription")}
-                            </p>
+                            <p>{t("login.heroDescription")}</p>
                         </div>
 
                         <div className="feature-row">
@@ -338,16 +399,26 @@ export default function LoginView() {
                                     l1: t("login.features.track.l1"),
                                     l2: t("login.features.track.l2"),
                                 },
-                            ].map((f) => (
-                                <div key={f.title} className="feature-card">
+                            ].map(feature => (
+                                <div key={feature.title} className="feature-card">
                                     <div className="feature-inner">
                                         <div className="feature-icon">
-                                            <img src={f.image} alt={f.title} className="feature-image" />
+                                            <img
+                                                src={feature.image}
+                                                alt={feature.title}
+                                                className="feature-image"
+                                            />
                                         </div>
-                                        <div className="feature-title">{f.title}</div>
+                                        <div className="feature-title">
+                                            {feature.title}
+                                        </div>
                                         <div className="feature-subtitle">
-                                            <span className="subtitle-line-1">{f.l1}</span>
-                                            <span className="subtitle-line-2">{f.l2}</span>
+                                            <span className="subtitle-line-1">
+                                                {feature.l1}
+                                            </span>
+                                            <span className="subtitle-line-2">
+                                                {feature.l2}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
