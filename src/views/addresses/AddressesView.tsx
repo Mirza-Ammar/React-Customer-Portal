@@ -16,8 +16,7 @@ import {
 import StickyTable from "@/components/table/StickyTable";
 import StatusChip from "@/components/table/StatusChip";
 import PaginationFooter from "@/components/table/PaginationFooter";
-import TableSkeleton from "@/components/table/tableSkeleton";
-
+import TableSkeleton from "@/components/table/TableSkeleton";
 import type { TableColumn } from "@/components/table/TableColumn";
 import type { AddressData } from "@/datamodels/AddressData";
 import { noAddress } from "@/lib/assets";
